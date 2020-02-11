@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<config>
+    <sections>
+        <payment>
+            <groups>
+                <ezdefi_cryptocurrencypayment translate="label" module="cryptocurrencypayment">
+                    <label>Ezdefi Module</label>
+                    <sort_order>1000</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <title translate="label">
+                            <label>Title</label>
+                            <frontend_type>text</frontend_type>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <sort_order>1</sort_order>
+                        </title>
+                        <active translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <sort_order>2</sort_order>
+                        </active>
+                        <gateway_api_url translate="label">
+                            <label>gateway api url</label>
+                            <frontend_type>text</frontend_type>
+                            <frontend_model>cryptocurrencypayment/config_gatewayurl</frontend_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <sort_order>3</sort_order>
+                        </gateway_api_url>
+                        <api_key translate="label">
+                            <label>api key</label>
+                            <frontend_type>text</frontend_type>
+                            <frontend_model>cryptocurrencypayment/config_apikey</frontend_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <sort_order>3</sort_order>
+                            <comment><![CDATA[<a href="https://merchant.ezdefi.com/register" target="_blank"> Resgister to get API Key </a>]]></comment>
+                        </api_key>
+                        <payment_method translate="label">
+                            <label>Payment method</label>
+                            <frontend_type>text</frontend_type>
+                            <frontend_model>cryptocurrencypayment/config_paymentmethod</frontend_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <sort_order>3</sort_order>
+                        </payment_method>
+                        <acceptable_variation translate="label">
+                            <label>ACCEPTABLE PRICE AVAILABLE</label>
+                            <frontend_type>text</frontend_type>
+<!--                            <validate>validate-min-max min-0 max-100</validate>-->
+                            <frontend_model>cryptocurrencypayment/config_acceptablevariation</frontend_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <sort_order>3</sort_order>
+                        </acceptable_variation>
+                        <currency translate="label">
+                            <label>Coins</label>
+                            <frontend_type>text</frontend_type>
+                            <frontend_model>cryptocurrencypayment/config_cryptocurrencies</frontend_model>
+                            <backend_model>ezdefi_cryptocurrencypayment/system_config_backend_cryptocurrencies</backend_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <sort_order>3</sort_order>
+                        </currency>
+                    </fields>
+                </ezdefi_cryptocurrencypayment>
+            </groups>
+        </payment>
+    </sections>
+</config>

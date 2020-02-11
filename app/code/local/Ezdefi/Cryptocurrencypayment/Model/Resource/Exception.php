@@ -1,0 +1,9 @@
+<?php
+
+class Ezdefi_Cryptocurrencypayment_Model_Resource_exception extends Mage_Core_Model_Resource_Db_Abstract
+{
+    protected function _construct()
+    {
+        $this->_init('ezdefi_cryptocurrencypayment/exception', 'id');
+    }
+}

@@ -1,0 +1,42 @@
+/*cointable*/
+.ezdefi__table-config-input {
+    width: 100%;
+}
+
+.ezdefi__currency-symbol {
+    position: relative;
+    width: 80px;
+}
+
+.ezdefi__currency-symbol >img {
+    width: 32px;
+    height: 32px;
+}
+
+.ezdefi__currency-symbol>span, .ezdefi__select-currency--name {
+    padding-left: 5px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.ezdefi__select-currency--item {
+    position:relative;
+}
+
+.ezdefi__select-currency--logo {
+    width: 36px;
+    height: 36px;
+}
+
+#row_payment_us_ezdefi_payment_currency input {
+    padding: 6px 4px !important;
+}
+
+#row_payment_us_ezdefi_payment_currency td {
+    padding-right: 1rem !important;
+}
+
+.ezdefi__currency-discount-input {
+    width: 40px !important;
+}
