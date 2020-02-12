@@ -105,7 +105,7 @@ $table = $installer->getConnection()
 $installer->getConnection()->createTable($table);
 
 $table = $installer->getConnection()
-    ->newTable($installer->getTable('ezdefi_cryptocurrencypayment/amount'))
+    ->newTable($installer->getTable('ezdefi_cryptocurrencypayment/exception'))
     ->addColumn(
         'id',
         Varien_Db_Ddl_Table::TYPE_INTEGER,
@@ -179,7 +179,7 @@ $table = $installer->getConnection()
 $installer->getConnection()->createTable($table);
 
 $table = $installer->getConnection()
-    ->newTable($installer->getTable('ezdefi_cryptocurrencypayment/exception'))
+    ->newTable($installer->getTable('ezdefi_cryptocurrencypayment/amount'))
     ->addColumn(
         'id',
         Varien_Db_Ddl_Table::TYPE_INTEGER,

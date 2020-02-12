@@ -27,22 +27,22 @@ class Ezdefi_Cryptocurrencypayment_Model_Paymentmethod extends Mage_Payment_Mode
         parent::validate();
         $info = $this->getInfoInstance();
 
-        if (!$info->getCustomFieldOne())
-        {
-            $errorCode = 'invalid_data';
-            $errorMsg = $this->_getHelper()->__("CustomFieldOne is a required field.\n");
-        }
-
-        if (!$info->getCustomFieldTwo())
-        {
-            $errorCode = 'invalid_data';
-            $errorMsg .= $this->_getHelper()->__('CustomFieldTwo is a required field.');
-        }
-
-        if ($errorMsg)
-        {
-            Mage::throwException($errorMsg);
-        }
+//        if (!$info->getCustomFieldOne())
+//        {
+//            $errorCode = 'invalid_data';
+//            $errorMsg = $this->_getHelper()->__("CustomFieldOne is a required field.\n");
+//        }
+//
+//        if (!$info->getCustomFieldTwo())
+//        {
+//            $errorCode = 'invalid_data';
+//            $errorMsg .= $this->_getHelper()->__('CustomFieldTwo is a required field.');
+//        }
+//
+//        if ($errorMsg)
+//        {
+//            Mage::throwException($errorMsg);
+//        }
 
         return $this;
     }

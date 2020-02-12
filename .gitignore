@@ -44,4 +44,7 @@ skin/adminhtml/default/default/*
 !skin/adminhtml/default/default/Ezdefi
 
 skin/install
-skin/frontend
+skin/frontend/rwd
+skin/frontend/default
+skin/frontend/base/default/*
+!skin/frontend/base/default/Ezdefi

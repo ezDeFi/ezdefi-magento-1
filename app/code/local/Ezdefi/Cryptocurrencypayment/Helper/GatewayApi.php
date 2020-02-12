@@ -1,6 +1,10 @@
 <?php
 class Ezdefi_Cryptocurrencypayment_Helper_GatewayApi extends Mage_Core_Helper_Abstract
 {
+    const DEFAULT_DECIMAL_LIST_COIN = 12;
+    const PENDING = 'pending';
+    const DONE = 'processing';
+
     public function getListToken($keyword, $baseUrl) {
         return $this->sendCurl('/token/list', 'GET', ['keyword' => $keyword, 'domain' => $baseUrl, 'platform' => 'magento 1']);
     }

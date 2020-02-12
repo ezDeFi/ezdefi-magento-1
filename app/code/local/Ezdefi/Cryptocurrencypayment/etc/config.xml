@@ -84,6 +84,16 @@
     </adminhtml>
 
     <frontend>
+        <layout>
+            <updates>
+                <ezdefi_cryptocurrencypayment>
+                    <file>cryptocurrencypayment.xml</file>
+                </ezdefi_cryptocurrencypayment>
+            </updates>
+        </layout>
+    </frontend>
+
+    <frontend>
         <routers>
             <cryptocurrencypayment>
                 <use>standard</use>
