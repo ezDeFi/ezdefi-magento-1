@@ -3,13 +3,11 @@ class Ezdefi_Cryptocurrencypayment_Frontend_PaymentController extends Mage_Core_
     public function createAction() {
         $orderId = Mage::getSingleton('checkout/session')->getLastRealOrderId();
         $requests = Mage::app()->getRequest()->getParams();
-
         $currencyId = $requests['currency_id'];
         $cryptoCurrency    = Mage::getModel('ezdefi_cryptocurrencypayment/currency')->getCollection()->addFieldToFilter('currency_id', $currencyId)->getData()[0];
-        $order             = Mage::getModel('sales/order')->loadByIncrementId('100000004');
+        $order             = Mage::getModel('sales/order')->loadByIncrementId($orderId);
 
         $paymentType = $requests['type'];
-
 
         if($paymentType === 'simple') {
             $payment = $this->createPaymentSimple($order, $cryptoCurrency);
@@ -101,5 +99,20 @@ class Ezdefi_Cryptocurrencypayment_Frontend_PaymentController extends Mage_Core_
         ]);
         $exceptionModel->save();
     }
+
+    public function checkOrderCompleteAction() {
+        $orderId =  Mage::getSingleton('checkout/session')->getLastRealOrderId();
+        $order   = Mage::getModel('sales/order')->loadByIncrementId($orderId);
+
+        if ($order->getStatus() === 'processing') {
+//            $this->_cart->setLastOrderId(null)
+//                ->setLastRealOrderId(null)
+//                ->setLastOrderStatus(null);
+            $this->getResponse()->setBody(json_encode(['orderStatus' => 'processing']));
+        } else {
+            $this->getResponse()->setBody(json_encode(['orderStatus' => 'pending']));
+        }
+    }
+
 
 }

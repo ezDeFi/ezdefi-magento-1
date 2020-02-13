@@ -33,6 +33,7 @@ class Ezdefi_Cryptocurrencypayment_Block_Form_Cryptocurrencypayment extends Mage
                     value="'.$currency['currency_id'].'"
                     data-name="'.$currency['name'].'"
                     data-logo="'.$currency['logo'].'"
+                    data-symbol="'.$currency['symbol'].'"
                     data-discount="'.$currency['discount'].'" ';
             if($key === 0) {
                 $html .= 'checked';

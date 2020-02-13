@@ -4,12 +4,11 @@ EzdefiReview.prototype = {
         this.saveUrl = saveUrl;
         this.successUrl = successUrl;
         this.agreementsForm = agreementsForm;
-        this.onSave = this.nextStep.bindAsEventListener(this);
         this.onComplete = this.resetLoadWaiting.bindAsEventListener(this);
     },
-    save: function(){
-        if (checkout.loadWaiting!=false) return;
-        checkout.setLoadWaiting('review');
+    save: function(callback){
+        // if (checkout.loadWaiting!=false) return;
+        // checkout.setLoadWaiting('review');
         var params = Form.serialize(payment.form);
         if (this.agreementsForm) {
             params += '&'+Form.serialize(this.agreementsForm);
@@ -21,7 +20,9 @@ EzdefiReview.prototype = {
                 method:'post',
                 parameters:params,
                 onComplete: this.onComplete,
-                onSuccess: this.onSave,
+                onSuccess: function () {
+                    callback();
+                },
                 onFailure: checkout.ajaxFailure.bind(checkout)
             }
         );
@@ -195,7 +196,7 @@ EzdefiCustomPayment.prototype = {
         return validateResult;
     },
 
-    save: function(){
+    save: function(callback){
         if (checkout.loadWaiting!=false) return;
         var validator = new Validation(this.form);
         if (this.validate() && validator.validate()) {
@@ -205,7 +206,9 @@ EzdefiCustomPayment.prototype = {
                 {
                     method:'post',
                     onComplete: this.onComplete,
-                    onSuccess: this.onSave,
+                    onSuccess: function () {
+                        callback();
+                    },
                     onFailure: checkout.ajaxFailure.bind(checkout),
                     parameters: Form.serialize(this.form)
                 }

@@ -35,11 +35,6 @@ app/code/local/Magentotutorial
 app/Mage.php
 app/bootstrap.php
 
-#skin/adminhtml/default/default/images
-#skin/adminhtml/default/default/lib
-#skin/adminhtml/default/default/xmlconnect
-#skin/adminhtml/default/default/*.css
-
 skin/adminhtml/default/default/*
 !skin/adminhtml/default/default/Ezdefi
 

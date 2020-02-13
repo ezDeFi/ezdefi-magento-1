@@ -7,6 +7,11 @@ class Ezdefi_Cryptocurrencypayment_Block_Payment_EzdefiMethod extends Mage_Core_
         $this->setTemplate('cryptocurrencypayment/payment/ezdefimethod.phtml');
     }
 
+    public function getPaymentId()
+    {
+        return $this->_data['payment']->_id;
+    }
+
     public function getOriginCurrency()
     {
         return $this->_data['payment']->originCurrency;
