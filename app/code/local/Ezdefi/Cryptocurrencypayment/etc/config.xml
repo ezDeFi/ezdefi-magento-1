@@ -81,7 +81,44 @@
                 </ezdefi_cryptocurrencypayment>
             </updates>
         </layout>
+        <menu>
+            <cryptocurrencypayment module="cryptocurrencypayment">
+                <title>Ezdefi</title>
+                <sort_order>71</sort_order>
+                <children>
+                    <exception module="cryptocurrencypayment">
+                        <title>Exception management</title>
+                        <sort_order>0</sort_order>
+                        <action>adminhtml/exception</action>
+                    </exception>
+                </children>
+            </cryptocurrencypayment>
+        </menu>
     </adminhtml>
+
+<!--    <admin>-->
+<!--        <routers>-->
+<!--            <cryptocurrencypayment>-->
+<!--                <use>admin</use>-->
+<!--                <args>-->
+<!--                    <module>Ezdefi_Cryptocurrencypayment_Adminhtml</module>-->
+<!--                    <frontName>ezdefi_admin</frontName>-->
+<!--                </args>-->
+<!--            </cryptocurrencypayment>-->
+<!--        </routers>-->
+<!--    </admin>-->
+
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <ezdefi_cryptocurrencypayment before="Mage_Adminhtml">Ezdefi_Cryptocurrencypayment_Adminhtml</ezdefi_cryptocurrencypayment>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
 
     <frontend>
         <layout>
