@@ -32,6 +32,7 @@ app/design/
 app/locale
 app/etc
 app/code/local/Magentotutorial
+app/code/local/Bss
 app/Mage.php
 app/bootstrap.php
 
