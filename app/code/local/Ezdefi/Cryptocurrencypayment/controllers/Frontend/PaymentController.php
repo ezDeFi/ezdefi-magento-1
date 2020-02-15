@@ -60,7 +60,7 @@ class Ezdefi_Cryptocurrencypayment_Frontend_PaymentController extends Mage_Core_
             'currency' => $cryptoCurrency['symbol'].':'.$cryptoCurrency['symbol'],
             'safedist' => $cryptoCurrency['block_confirmation'],
             'duration' => $cryptoCurrency['payment_lifetime'],
-            'callback' => Mage::getUrl('ezdefi_frontend/callbackconfirmorder')
+            'callback' => Mage::getUrl('ezdefi_frontend/callback/confirmorder')
         ]);
         $this->addException($order, $cryptoCurrency, $payment->_id, $amountId, 1);
 
@@ -75,7 +75,7 @@ class Ezdefi_Cryptocurrencypayment_Frontend_PaymentController extends Mage_Core_
             'currency' => $order['base_currency_code'].':'.$cryptoCurrency['symbol'],
             'safedist' => $cryptoCurrency['block_confirmation'],
             'duration' => $cryptoCurrency['payment_lifetime'],
-            'callback' => Mage::getUrl('ezdefi_frontend/callbackconfirmorder')
+            'callback' => Mage::getUrl('ezdefi_frontend/callback/confirmorder')
         ]);
 
         $cryptoValue = $payment->value * pow(10, - $payment->decimal);
