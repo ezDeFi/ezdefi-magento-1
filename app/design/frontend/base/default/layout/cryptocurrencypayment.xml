@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<layout>
+    <checkout_onepage_index translate="label">
+        <reference name="head">
+            <action method="addCss">
+                <stylesheet>Ezdefi/Cryptocurrencypayment/css/ezdefi-payment.css</stylesheet>
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <script>Ezdefi/Cryptocurrencypayment/js/rewrite-default.js</script>
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <script>Ezdefi/Cryptocurrencypayment/js/ezdefi-payment.js</script>
+            </action>
+        </reference>
+    </checkout_onepage_index>
+</layout>

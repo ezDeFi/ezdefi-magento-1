@@ -28,13 +28,33 @@ index.php.sample
 
 app/code/community/
 app/code/core
-app/design/
 app/locale
-app/etc
 app/code/local/Magentotutorial
 app/code/local/Bss
 app/Mage.php
 app/bootstrap.php
+
+app/etc/*
+!app/etc/modules
+
+app/etc/modules/*
+!app/etc/modules/Ezdefi_Cryptocurrencypayment.xml
+
+
+app/design/install
+app/design/adminhtml/default/default/*
+!app/design/adminhtml/default/default/layout
+app/design/adminhtml/default/default/layout/*
+!app/design/adminhtml/default/default/layout/cryptocurrencypayment.xml
+
+app/design/frontend/*
+!app/design/frontend/base
+app/design/frontend/base/default/*
+!app/design/frontend/base/default/layout
+app/design/frontend/base/default/layout/*
+!app/design/frontend/base/default/layout/cryptocurrencypayment.xml
+
+
 
 skin/adminhtml/default/default/*
 !skin/adminhtml/default/default/Ezdefi
