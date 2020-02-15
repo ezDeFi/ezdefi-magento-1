@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<layout>
+    <adminhtml_exception_index>
+        <reference name="content">
+            <block type="cryptocurrencypayment/adminhtml_exception" name="exception"/>
+        </reference>
+        <reference name="head">
+            <action method="addCss">
+                <stylesheet>Ezdefi/Cryptocurrencypayment/css/select2.min.css</stylesheet>
+            </action>
+            <action method="addCss">
+                <stylesheet>Ezdefi/Cryptocurrencypayment/css/ezdefi-exception.css</stylesheet>
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <script>Ezdefi/Cryptocurrencypayment/js/jquery-3.4.1.min.js</script>
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <script>Ezdefi/Cryptocurrencypayment/js/select2.min.js</script>
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <script>Ezdefi/Cryptocurrencypayment/js/ezdefi-exception.js</script>
+            </action>
+        </reference>
+    </adminhtml_exception_index>
+    <adminhtml_system_config_edit>
+        <reference name="head">
+            <action method="addCss">
+                <stylesheet>Ezdefi/Cryptocurrencypayment/css/ezdefi-config.css</stylesheet>
+            </action>
+            <action method="addCss">
+                <stylesheet>Ezdefi/Cryptocurrencypayment/css/select2.min.css</stylesheet>
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <script>Ezdefi/Cryptocurrencypayment/js/jquery-3.4.1.min.js</script>
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <script>Ezdefi/Cryptocurrencypayment/js/select2.min.js</script>
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <script>Ezdefi/Cryptocurrencypayment/js/custom-validate.js</script>
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <script>Ezdefi/Cryptocurrencypayment/js/ezdefi-config.js</script>
+            </action>
+
+    <!--        <action method="addJs"><script>my_extension/colorpicker.js</script></action>-->
+    <!--        <action method="addJs"><script>prototype/prototype.js</script></action>-->
+        </reference>
+    </adminhtml_system_config_edit>
+</layout>
