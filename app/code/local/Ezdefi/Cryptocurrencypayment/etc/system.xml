@@ -28,7 +28,7 @@
                             <sort_order>2</sort_order>
                         </active>
                         <gateway_api_url translate="label">
-                            <label>gateway api url</label>
+                            <label>Gateway API URL</label>
                             <frontend_type>text</frontend_type>
                             <frontend_model>cryptocurrencypayment/config_gatewayurl</frontend_model>
                             <show_in_default>1</show_in_default>
@@ -37,7 +37,7 @@
                             <sort_order>3</sort_order>
                         </gateway_api_url>
                         <api_key translate="label">
-                            <label>api key</label>
+                            <label>API Key</label>
                             <frontend_type>text</frontend_type>
                             <frontend_model>cryptocurrencypayment/config_apikey</frontend_model>
                             <show_in_default>1</show_in_default>
@@ -56,17 +56,17 @@
                             <sort_order>3</sort_order>
                         </payment_method>
                         <acceptable_variation translate="label">
-                            <label>ACCEPTABLE PRICE AVAILABLE</label>
+                            <label>Acceptable price variation</label>
                             <frontend_type>text</frontend_type>
-<!--                            <validate>validate-min-max min-0 max-100</validate>-->
                             <frontend_model>cryptocurrencypayment/config_acceptablevariation</frontend_model>
+                            <comment>Allowable amount variation (%)</comment>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
                             <sort_order>3</sort_order>
                         </acceptable_variation>
                         <currency translate="label">
-                            <label>Coins</label>
+                            <label>Accepted Cryptocurrency</label>
                             <frontend_type>text</frontend_type>
                             <frontend_model>cryptocurrencypayment/config_cryptocurrencies</frontend_model>
                             <backend_model>ezdefi_cryptocurrencypayment/system_config_backend_cryptocurrencies</backend_model>

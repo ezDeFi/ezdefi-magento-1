@@ -71,9 +71,9 @@ $j( function() {
     });
     function showAcceptedCurrency() {
         if($j(selectors.simplePaymentCheckbox).is(':checked')) {
-            $j('#row_payment_us_ezdefi_payment_variation').css('display', 'table-row');
+            $j('#row_payment_ezdefi_cryptocurrencypayment_acceptable_variation').css('display', 'table-row');
         } else {
-            $j('#row_payment_us_ezdefi_payment_variation').css('display', 'none');
+            $j('#row_payment_ezdefi_cryptocurrencypayment_acceptable_variation').css('display', 'none');
         }
     }
 
@@ -103,17 +103,17 @@ $j( function() {
                     <input type="hidden" class="${selectorToClass(selectors.currencyMaxDecimalInput)}">
                     <input type="hidden" class="${selectorToClass(selectors.currencyOrderByInput)}">
                 </td>
-                <td>
+                <td class="value">
                     <input type="text" class="ezdefi__config-input ezdefi__table-config-input ${selectorToClass(selectors.currencydiscountInput)} validate-not-negative-number only-float validate-min-max max-100"> 
                     <span>%</span>
                 </td>
-                <td>
+                <td class="value">
                     <input type="text" class="ezdefi__config-input ezdefi__table-config-input ${selectorToClass(selectors.currencyLifetimeInput)} validate-not-negative-number validate-digits only-positive-integer">
                 </td>
-                <td><input type="text" class="ezdefi__config-input ezdefi__table-config-input ${selectorToClass(selectors.walletAddressInput)} required-entry"></td>
-                <td><input type="text" class="ezdefi__config-input ezdefi__table-config-input ${selectorToClass(selectors.blockConfirmationInput)} validate-not-negative-number validate-digits only-positive-integer"></td>
-                <td><input type="text" 
-                    class="ezdefi__config-input ezdefi__table-config-input ${selectorToClass(selectors.currencyDecimalInput)} validate-not-negative-number required-entry validate-digits only-positive-integer validate-min-max min-2">
+                <td class="value"><input type="text" placeholder="Wallet address" class="ezdefi__config-input ezdefi__table-config-input ${selectorToClass(selectors.walletAddressInput)}"></td>
+                <td class="value"><input type="text" class="ezdefi__config-input ezdefi__table-config-input ${selectorToClass(selectors.blockConfirmationInput)} validate-not-negative-number validate-digits only-positive-integer"></td>
+                <td class="value"><input type="text" 
+                    class="ezdefi__config-input ezdefi__table-config-input ${selectorToClass(selectors.currencyDecimalInput)} validate-not-negative-number validate-digits only-positive-integer validate-min-max min-2">
                 </td>
                 <td>
                     <button class="scalable delete ${selectorToClass(selectors.btnCancelAddCurrency)}" type="button" id="btn-cancel-${tmp}"><span>Delete</span></button>
@@ -237,6 +237,7 @@ $j( function() {
             let blockConfirmation = $j(rowElement).find(selectors.blockConfirmationInput);
             let maxDecimal        = $j(rowElement).find(selectors.currencyMaxDecimalInput);
             let orderBy           = $j(rowElement).find(selectors.currencyOrderByInput);
+            let walletAddress           = $j(rowElement).find(selectors.walletAddressInput);
 
             decimal.attr('data-validate', '{min:2, max:'+data.decimal+'}')
 
@@ -251,7 +252,11 @@ $j( function() {
             discount         .attr('name', 'groups[ezdefi_cryptocurrencypayment][fields][currency][value][add]['+data._id+'][discount]');
             maxDecimal       .attr('name', 'groups[ezdefi_cryptocurrencypayment][fields][currency][value][add]['+data._id+'][max_decimal]');
             orderBy          .attr('name', 'groups[ezdefi_cryptocurrencypayment][fields][currency][value][add]['+data._id+'][order]');
-            $j(rowElement).find(selectors.walletAddressInput)    .attr('name', 'groups[ezdefi_cryptocurrencypayment][fields][currency][value][add]['+data._id+'][wallet_address]');
+            walletAddress    .attr('name', 'groups[ezdefi_cryptocurrencypayment][fields][currency][value][add]['+data._id+'][wallet_address]');
+
+            walletAddress    .addClass('required-entry');
+            decimal          .addClass('required-entry');
+
 
             idInput          .val(data._id);
             nameInput        .val(data.name);

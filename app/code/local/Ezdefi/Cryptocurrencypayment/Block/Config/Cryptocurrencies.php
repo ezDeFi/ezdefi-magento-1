@@ -98,29 +98,30 @@ class Ezdefi_Cryptocurrencypayment_Block_Config_Cryptocurrencies extends Mage_Ad
                         name="groups[ezdefi_cryptocurrencypayment][fields][currency][value][edit]['.$currencyData['currency_id'].'][max_decimal]" 
                         value="'.$currencyData['currency_decimal'].'">
                 </td>
-                <td><input type="text" 
+                <td class="value"><input type="text" 
                     name="groups[ezdefi_cryptocurrencypayment][fields][currency][value][edit][' . $currencyData['currency_id'] . '][discount]" 
                     class="ezdefi__config-input ezdefi__table-config-input ezdefi__currency-discount-input
                     validate-min-max max-100 validate-not-negative-number only-float"
                     value="' . (float)$currencyData['discount'] . '">
                     <span>%</span>
                 </td>
-                <td><input type="text" 
+                <td class="value"><input type="text" 
                     name="groups[ezdefi_cryptocurrencypayment][fields][currency][value][edit][' . $currencyData['currency_id'] . '][lifetime]"
                     class="ezdefi__config-input ezdefi__payment-lifetime-input
                     ezdefi__table-config-input validate-not-negative-number validate-digits only-positive-integer"
                     value="' . ($currencyData['payment_lifetime'] / 60) . '"></td>
-                <td><input type="text" 
+                <td class="value"><input type="text" 
+                    placeholder="Wallet address"
                     class="ezdefi__config-input ezdefi__table-config-input ezdefi__wallet-address-input
                     required-entry"
                     name="groups[ezdefi_cryptocurrencypayment][fields][currency][value][edit][' . $currencyData['currency_id'] . '][wallet_address]" 
                     value="' . $currencyData['wallet_address'] . '"></td>
-                <td><input type="text"
+                <td class="value"><input type="text"
                     class="ezdefi__config-input ezdefi__table-config-input ezdefi_block-confirmation-input
                     validate-not-negative-number validate-digits only-positive-integer"
                     name="groups[ezdefi_cryptocurrencypayment][fields][currency][value][edit][' . $currencyData['currency_id'] . '][block_confirmation]" 
                     value="' . $currencyData['block_confirmation'] . '"></td>
-                <td><input type="text"
+                <td class="value"><input type="text"
                     class="ezdefi__config-input ezdefi__table-config-input ezdefi__currency-decimal-input
                     validate-min-max min-2 max-'.$currencyData['currency_decimal'].' validate-not-negative-number validate-digits required-entry only-positive-integer"
                     name="groups[ezdefi_cryptocurrencypayment][fields][currency][value][edit][' . $currencyData['currency_id'] . '][decimal]"
@@ -148,24 +149,25 @@ class Ezdefi_Cryptocurrencypayment_Block_Config_Cryptocurrencies extends Mage_Ad
                     <input type="hidden" class="ezdefi__currency-max-decimal-input" name="groups[ezdefi_cryptocurrencypayment][fields][currency][value][add]['.$currencyData['currency_id'].'][max_decimal]" value="'.$currencyData['currency_decimal'].'">
                     <input type="hidden" class="ezdefi__currency-orderby-input" name="groups[ezdefi_cryptocurrencypayment][fields][currency][value][add]['.$currencyData['currency_id'].'][order]" value="'.$key.'">
                 <p class="ezdefi__currency-symbol"><img src="'.$currencyData['logo'].'"><span>btc</span></p></td>
-                <td>
+                <td class="value">
                     <input type="text" 
                         class="ezdefi__config-input ezdefi__table-config-input ezdefi__currency-discount-input 
                         validate-not-negative-number only-float validate-min-max max-100" 
                         name="groups[ezdefi_cryptocurrencypayment][fields][currency][value][add]['.$currencyData['currency_id'].'][discount]" value="0"> 
                     <span>%</span>
                 </td>
-                <td>
+                <td class="value">
                     <input type="text" 
                     class="ezdefi__config-input ezdefi__table-config-input ezdefi__payment-lifetime-input 
                     validate-not-negative-number validate-digits only-positive-integer" name="groups[ezdefi_cryptocurrencypayment][fields][currency][value][add]['.$currencyData['currency_id'].'][lifetime]" value="15">
                 </td>
-                <td>
+                <td class="value">
                     <input type="text" 
+                    placeholder="Wallet address"
                     class="ezdefi__config-input ezdefi__table-config-input ezdefi__wallet-address-input 
                     required-entry" name="groups[ezdefi_cryptocurrencypayment][fields][currency][value][add]['.$currencyData['currency_id'].'][wallet_address]"></td>
-                <td><input type="text" class="ezdefi__table-config-input ezdefi_block-confirmation-input validate-not-negative-number validate-digits only-positive-integer" name="groups[ezdefi_cryptocurrencypayment][fields][currency][value][add]['.$currencyData['currency_id'].'][block_confirmation]" value="1"></td>
-                <td><input type="text" 
+                <td class="value"><input type="text" class="ezdefi__table-config-input ezdefi_block-confirmation-input validate-not-negative-number validate-digits only-positive-integer" name="groups[ezdefi_cryptocurrencypayment][fields][currency][value][add]['.$currencyData['currency_id'].'][block_confirmation]" value="1"></td>
+                <td class="value"><input type="text" 
                     class="ezdefi__config-input ezdefi__table-config-input ezdefi__currency-decimal-input
                     validate-min-max min-2 max-'.$currencyData['currency_decimal'].' validate-not-negative-number required-entry validate-digits only-positive-integer" 
                     name="groups[ezdefi_cryptocurrencypayment][fields][currency][value][add]['.$currencyData['currency_id'].'][decimal]" 

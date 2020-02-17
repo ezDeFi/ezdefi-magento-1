@@ -19,6 +19,10 @@ $j( function() {
         let message = '';
         let classNames = element.className.split(/\s+/);
 
+        if(Validation.get('IsEmpty').test(value)) {
+            return true;
+        }
+
         for (let i = 0; i<classNames.length; i++) {
             if (classNames[i].match(reMin) && result) {
                 let testValue = classNames[i].split('-')[1];
