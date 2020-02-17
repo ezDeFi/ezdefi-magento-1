@@ -24,7 +24,6 @@ class Ezdefi_Cryptocurrencypayment_Adminhtml_ExceptionController extends Mage_Ad
 
     public function deleteAction()
     {
-        var_dump(1);die;
         $requests = Mage::app()->getRequest()->getParams();
 
         $exceptionId = $requests['exception_id'];
@@ -84,7 +83,6 @@ class Ezdefi_Cryptocurrencypayment_Adminhtml_ExceptionController extends Mage_Ad
         $exception = Mage::getModel('ezdefi_cryptocurrencypayment/exception')->load($exceptionId);
         $this->setStatusForOrder($orderIdToAssign, 'processing', 'processing');
 
-
         //delete exception with order_id = exception.order_id
         $orderIdTodelete = $exception->getData()['order_id'];
         if ($orderIdTodelete) {
@@ -96,7 +94,6 @@ class Ezdefi_Cryptocurrencypayment_Adminhtml_ExceptionController extends Mage_Ad
             }
         }
 
-        //delete exception with id = 'exception_id'
         $exception->delete();
 
         $this->_redirect("*/*/");
