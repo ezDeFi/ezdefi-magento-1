@@ -74,7 +74,6 @@ class Ezdefi_Cryptocurrencypayment_Helper_GatewayApi extends Mage_Core_Helper_Ab
 
     public function createPayment($param) {
         $payment = $this->sendCurl('/payment/create', 'POST', $param);
-
         if($payment) {
             return json_decode($payment)->data;
         }

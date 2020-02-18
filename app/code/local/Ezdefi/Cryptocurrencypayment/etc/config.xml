@@ -62,14 +62,14 @@
 
     <default>
         <payment>
-            <cryptocurrencypayment>
+            <ezdefi_cryptocurrencypayment>
                 <active>1</active>
                 <model>ezdefi_cryptocurrencypayment/paymentmethod</model>
                 <order_status>pending</order_status>
                 <title>CryptoCurrencyPayment</title>
                 <allowspecific>0</allowspecific>
                 <payment_action>sale</payment_action>
-            </cryptocurrencypayment>
+            </ezdefi_cryptocurrencypayment>
         </payment>
     </default>
 

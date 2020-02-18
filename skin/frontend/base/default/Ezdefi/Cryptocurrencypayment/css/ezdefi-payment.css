@@ -337,6 +337,24 @@ div.ezdefi-pay-box, div.simple-pay-box {
     cursor: pointer;
 }
 
+.ezdefi__payment-currency--logo {
+    width: 40px;
+    margin-right: 7px;
+}
+
+.ezdefi-payment__qr-code {
+    display: inline-block;
+}
+
+.btn-show-payment--ezdefi {
+    display: flex;
+    justify-content: center;
+}
+
+.pay-with-ezdefi-label {
+    padding-left: 10px;
+}
+
 .ezdefi__currency-name {
     padding-left: 5px;
 }
@@ -394,6 +412,11 @@ div.ezdefi-pay-box, div.simple-pay-box {
 .custom-modal {
     top: 50%;
     transform: translateY(-50%) !important;
+}
+
+.hover-none:hover {
+    background: none;
+    color: transparent;
 }
 
 .ezdefi__alert-copy-amount,

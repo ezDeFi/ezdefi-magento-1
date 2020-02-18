@@ -134,7 +134,6 @@ $j( function() {
             var that = this;
             ezdefiCustomPayment.save(function () {
                 ezdefiReview.save(function () {
-                    that.createSimplePayment();
                     that.checkDefaultPaymentToCreate();
                     that.checkOrderComplete();
                     $j(selectors.btnPlaceOrder).css('display', 'none');

@@ -48,6 +48,6 @@ class Ezdefi_Cryptocurrencypayment_Model_Paymentmethod extends Mage_Payment_Mode
 
     public function getOrderPlaceRedirectUrl()
     {
-        return Mage::getUrl('cryptocurrencypayment/payment/redirect', array('_secure' => false));
+        return Mage::getUrl('ezdef_cryptocurrencypayment/payment/redirect', array('_secure' => false));
     }
 }
