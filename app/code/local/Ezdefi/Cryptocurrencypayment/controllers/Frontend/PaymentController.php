@@ -61,7 +61,7 @@ class Ezdefi_Cryptocurrencypayment_Frontend_PaymentController extends Mage_Core_
 
         $payment = Mage::helper('cryptocurrencypayment/GatewayApi')->createPayment([
             'uoid'     => $order['entity_id'] . '-1',
-            'amountId' => true,
+//            'amountId' => true,
             'value'    => $amountId,
             'to'       => $cryptoCurrency['wallet_address'],
             'currency' => $cryptoCurrency['symbol'] . ':' . $cryptoCurrency['symbol'],
@@ -69,6 +69,7 @@ class Ezdefi_Cryptocurrencypayment_Frontend_PaymentController extends Mage_Core_
             'duration' => $cryptoCurrency['payment_lifetime'],
             'callback' => Mage::getUrl('ezdefi_frontend/callback/confirmorder')
         ]);
+
         $this->addException($order, $cryptoCurrency, $payment->_id, $amountId, 1);
 
         return $payment;
