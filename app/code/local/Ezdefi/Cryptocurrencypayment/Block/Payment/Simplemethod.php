@@ -1,4 +1,5 @@
 <?php
+
 class Ezdefi_Cryptocurrencypayment_Block_Payment_SimpleMethod extends Mage_Core_Block_Template
 {
     public function __construct(array $args)
@@ -7,11 +8,13 @@ class Ezdefi_Cryptocurrencypayment_Block_Payment_SimpleMethod extends Mage_Core_
         $this->setTemplate('cryptocurrencypayment/payment/ezdefimethod.phtml');
     }
 
-    public function isError() {
+    public function isError()
+    {
         return !$this->_data['payment'];
     }
 
-    public function getPaymentId(){
+    public function getPaymentId()
+    {
         return __($this->_data['payment']->_id);
     }
 
@@ -35,15 +38,18 @@ class Ezdefi_Cryptocurrencypayment_Block_Payment_SimpleMethod extends Mage_Core_
         return __($this->_data['payment']->originValue);
     }
 
-    public function getGatewayQrCode() {
+    public function getGatewayQrCode()
+    {
         return __($this->_data['payment']->qr);
     }
 
-    public function getExpiration() {
+    public function getExpiration()
+    {
         return __($this->_data['payment']->expiredTime);
     }
 
-    public function getWalletAddress() {
+    public function getWalletAddress()
+    {
         return __($this->_data['payment']->to);
     }
 }

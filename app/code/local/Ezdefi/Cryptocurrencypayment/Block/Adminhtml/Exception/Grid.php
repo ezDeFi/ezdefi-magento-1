@@ -53,10 +53,10 @@ class Ezdefi_Cryptocurrencypayment_Block_Adminhtml_Exception_Grid extends Mage_A
         ));
 
         $this->addColumn('amount_id', array(
-            'header'   => 'Amount Id',
-            'sortable' => false,
-            'width'    => '60',
-            'type'     => 'text',
+            'header'                    => 'Amount Id',
+            'sortable'                  => false,
+            'width'                     => '60',
+            'type'                      => 'text',
             'index'                     => 'amount_id',
             'renderer'                  => 'Ezdefi_Cryptocurrencypayment_Block_Adminhtml_Exception_Column_Amount',
             'filter_condition_callback' => array($this, '_filterAmountIdConditionCallback')
@@ -76,20 +76,21 @@ class Ezdefi_Cryptocurrencypayment_Block_Adminhtml_Exception_Grid extends Mage_A
         ));
         $this->addColumn('action',
             array(
-                'header'    => 'Action',
-                'width'     => '100',
-                'type'      => 'action',
+                'header'   => 'Action',
+                'width'    => '100',
+                'type'     => 'action',
                 'renderer' => 'Ezdefi_Cryptocurrencypayment_Block_Adminhtml_Exception_Column_Action',
                 'index'    => 'action',
-                'filter'    => false,
-                'sortable'  => false,
+                'filter'   => false,
+                'sortable' => false,
             ));
 
         return parent::_prepareColumns();
     }
 
-    private function getCurrencyOption() {
-        $result = [];
+    private function getCurrencyOption()
+    {
+        $result     = [];
         $currencies = Mage::getModel('ezdefi_cryptocurrencypayment/currency')
             ->getCollection()->setOrder('`order`', 'ASC')->getData();
 

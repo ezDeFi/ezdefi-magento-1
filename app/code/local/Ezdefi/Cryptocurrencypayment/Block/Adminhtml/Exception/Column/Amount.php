@@ -5,8 +5,8 @@ class Ezdefi_Cryptocurrencypayment_Block_Adminhtml_Exception_Column_Amount exten
 
     public function render(Varien_Object $row)
     {
-        $amountId = $row->getAmountId();
-        $orderId  = $row->getOrderId();
+        $amountId    = $row->getAmountId();
+        $orderId     = $row->getOrderId();
         $explorerUrl = $row->getExplorerUrl();
 
         $amountHtml  = '';
@@ -26,7 +26,7 @@ class Ezdefi_Cryptocurrencypayment_Block_Adminhtml_Exception_Column_Amount exten
 
         $amountHtml = '<p>' . $amount . '</p>';
         if (!$orderId) {
-            $amountHtml .= '<a href="'.$explorerUrl.'" target="_blank">' . substr($explorerUrl, 0, 50) . '</a>';
+            $amountHtml .= '<a href="' . $explorerUrl . '" target="_blank">' . substr($explorerUrl, 0, 50) . '</a>';
         }
 
         $items['amount_id'] = $amountHtml;

@@ -1,22 +1,19 @@
 <?php
-// app/code/local/Ezdefi/Cryptocurrencypayment/Block/Info/Cryptocurrencypayment.php
+
 class Ezdefi_Cryptocurrencypayment_Block_Info_Cryptocurrencypayment extends Mage_Payment_Block_Info
 {
     protected function _prepareSpecificInformation($transport = null)
     {
-        if (null !== $this->_paymentSpecificInformation)
-        {
+        if (null !== $this->_paymentSpecificInformation) {
             return $this->_paymentSpecificInformation;
         }
 
         $data = array();
-        if ($this->getInfo()->getCustomFieldOne())
-        {
+        if ($this->getInfo()->getCustomFieldOne()) {
             $data[Mage::helper('payment')->__('Custom Field One')] = $this->getInfo()->getCustomFieldOne();
         }
 
-        if ($this->getInfo()->getCustomFieldTwo())
-        {
+        if ($this->getInfo()->getCustomFieldTwo()) {
             $data[Mage::helper('payment')->__('Custom Field Two')] = $this->getInfo()->getCustomFieldTwo();
         }
 
