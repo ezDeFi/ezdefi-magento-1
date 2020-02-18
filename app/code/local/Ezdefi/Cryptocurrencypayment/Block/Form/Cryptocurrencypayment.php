@@ -1,5 +1,5 @@
 <?php
-// app/code/local/Ezdefi/Cryptocurrencypayment/Block/Form/Cryptocurrencypayment.php
+
 class Ezdefi_Cryptocurrencypayment_Block_Form_Cryptocurrencypayment extends Mage_Payment_Block_Form
 {
     protected function _construct()
@@ -10,7 +10,10 @@ class Ezdefi_Cryptocurrencypayment_Block_Form_Cryptocurrencypayment extends Mage
 
     public function getCoins() {
         $currencies = Mage::getModel('ezdefi_cryptocurrencypayment/currency')->getCollection()->setOrder('`order`', 'ASC')->getData();
-        $currenciesWithPrice = Mage::helper('cryptocurrencypayment/GatewayApi')->getCurrenciesWithPrice($currencies, '10' , 'USD');
+        $orderId = Mage::getSingleton('checkout/session')->getLastRealOrderId();
+        $order             = Mage::getModel('sales/order')->loadByIncrementId($orderId);
+
+        $currenciesWithPrice = Mage::helper('cryptocurrencypayment/GatewayApi')->getCurrenciesWithPrice($currencies, $order['grand_total'], $order['base_currency_code']);
 
         $html = '';
         foreach ($currenciesWithPrice as $key => $currency) {

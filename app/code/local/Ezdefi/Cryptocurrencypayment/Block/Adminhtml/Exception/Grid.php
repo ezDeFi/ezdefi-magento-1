@@ -91,7 +91,7 @@ class Ezdefi_Cryptocurrencypayment_Block_Adminhtml_Exception_Grid extends Mage_A
     private function getCurrencyOption() {
         $result = [];
         $currencies = Mage::getModel('ezdefi_cryptocurrencypayment/currency')
-            ->getCollection()->getData();
+            ->getCollection()->setOrder('`order`', 'ASC')->getData();
 
         foreach ($currencies as $currency) {
             $result[$currency['symbol']] = strtoupper($currency['symbol']);
