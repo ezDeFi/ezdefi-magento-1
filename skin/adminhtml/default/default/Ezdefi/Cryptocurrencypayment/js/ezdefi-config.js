@@ -53,10 +53,6 @@ $j( function() {
     });
 
     $j(document).on("change", '.ezdefi__gateway-api-url-input', function () {
-        var apiKey = $j('.ezdefi__api-key').val();
-        $j('.ezdefi__api-key').val('x');
-        validator.validate();
-        $j('.ezdefi__api-key').val(apiKey);
         validator.validate();
     });
 
@@ -86,6 +82,14 @@ $j( function() {
     }
 
     //----------------------------sortable-------------------------
+    $j( '#ezdefi-configuration-coin-table' ).sortable({
+        stop: function(event, ui) {
+            $j('.ezdefi__currency-orderby-input').each(function(order) {
+                $j(this).val(order);
+            });
+        }
+    });
+
 
     // ------------------------coin config---------------------------
     $j(document).on("click", "#ezdefi-configuration-add-coin", function () {
@@ -239,8 +243,6 @@ $j( function() {
             let orderBy           = $j(rowElement).find(selectors.currencyOrderByInput);
             let walletAddress           = $j(rowElement).find(selectors.walletAddressInput);
 
-            decimal.attr('data-validate', '{min:2, max:'+data.decimal+'}')
-
             idInput          .attr('name', 'groups[ezdefi_cryptocurrencypayment][fields][currency][value][add]['+data._id+'][id]');
             nameInput        .attr('name', 'groups[ezdefi_cryptocurrencypayment][fields][currency][value][add]['+data._id+'][name]');
             symbolInput      .attr('name', 'groups[ezdefi_cryptocurrencypayment][fields][currency][value][add]['+data._id+'][symbol]');
@@ -255,8 +257,7 @@ $j( function() {
             walletAddress    .attr('name', 'groups[ezdefi_cryptocurrencypayment][fields][currency][value][add]['+data._id+'][wallet_address]');
 
             walletAddress    .addClass('required-entry');
-            decimal          .addClass('required-entry');
-
+            decimal          .addClass('required-entry max-' + data.decimal);
 
             idInput          .val(data._id);
             nameInput        .val(data.name);

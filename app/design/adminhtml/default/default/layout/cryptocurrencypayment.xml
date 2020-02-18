@@ -33,9 +33,16 @@
             <action method="addCss">
                 <stylesheet>Ezdefi/Cryptocurrencypayment/css/select2.min.css</stylesheet>
             </action>
+            <action method="addCss">
+                <stylesheet>Ezdefi/Cryptocurrencypayment/css/jquery-ui.min.css</stylesheet>
+            </action>
             <action method="addItem">
                 <type>skin_js</type>
                 <script>Ezdefi/Cryptocurrencypayment/js/jquery-3.4.1.min.js</script>
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <script>Ezdefi/Cryptocurrencypayment/js/jquery-ui.min.js</script>
             </action>
             <action method="addItem">
                 <type>skin_js</type>
