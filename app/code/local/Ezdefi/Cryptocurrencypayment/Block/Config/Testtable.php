@@ -13,7 +13,7 @@ class Ezdefi_Cryptocurrencypayment_Block_Config_Testtable extends Mage_Adminhtml
             'style' => 'width:100px',
         ));
 
-        $this->_addAfter = false;
+        $this->_addAfter       = false;
         $this->_addButtonLabel = 'Add';
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 class Ezdefi_Cryptocurrencypayment_Block_Payment_EzdefiMethod extends Mage_Core_Block_Template
 {
     public function __construct(array $args)
@@ -29,14 +30,16 @@ class Ezdefi_Cryptocurrencypayment_Block_Payment_EzdefiMethod extends Mage_Core_
 
     public function getCryptoValue()
     {
-        return __($this->_data['payment']->value * pow(10, - $this->_data['payment']->decimal));
+        return __($this->_data['payment']->value * pow(10, -$this->_data['payment']->decimal));
     }
 
-    public function getQrCode() {
+    public function getQrCode()
+    {
         return __($this->_data['payment']->qr);
     }
 
-    public function getExpiration() {
+    public function getExpiration()
+    {
         return __($this->_data['payment']->expiredTime);
     }
 }

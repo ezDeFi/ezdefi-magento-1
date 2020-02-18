@@ -1,23 +1,25 @@
 <?php
-class Ezdefi_Cryptocurrencypayment_Frontend_CallbackController extends Mage_Core_Controller_Front_Action {
-    CONST PAY_ON_TIME = 1;
+
+class Ezdefi_Cryptocurrencypayment_Frontend_CallbackController extends Mage_Core_Controller_Front_Action
+{
+    CONST PAY_ON_TIME   = 1;
     CONST PAID_OUT_TIME = 3;
 
     public function ConfirmOrderAction()
     {
-        $requests = Mage::app()->getRequest()->getParams();
+        $requests  = Mage::app()->getRequest()->getParams();
         $paymentId = $requests['paymentid'];
 
         if ($paymentId) {
             $payment = Mage::helper('cryptocurrencypayment/GatewayApi')->checkPaymentComplete($paymentId);
             if ($payment['status'] == 'DONE') {
-                $uoid = $payment['uoid'];
-                $orderId = explode('-', $uoid)[0];
+                $uoid        = $payment['uoid'];
+                $orderId     = explode('-', $uoid)[0];
                 $hasAmountId = explode('-', $uoid)[1];
 
                 if ($hasAmountId == 1) {
                     $exceptionCollection = Mage::getModel('ezdefi_cryptocurrencypayment/exception')->getCollection()->addFieldToFilter('payment_id', $payment['_id']);
-                    $exception = $exceptionCollection->getFirstItem();
+                    $exception           = $exceptionCollection->getFirstItem();
                     $exception->setData('paid', self::PAY_ON_TIME);
                     $exception->setData('explorer_url', $payment['explorer_url']);
                     $exception->save();
@@ -31,7 +33,7 @@ class Ezdefi_Cryptocurrencypayment_Frontend_CallbackController extends Mage_Core
             }
             if ($payment['status'] == 'EXPIRED_DONE') {
                 $exceptionCollection = Mage::getModel('ezdefi_cryptocurrencypayment/exception')->getCollection()->addFieldToFilter('payment_id', $payment['_id']);
-                $exception = $exceptionCollection->getFirstItem();
+                $exception           = $exceptionCollection->getFirstItem();
                 $exception->setData('paid', self::PAID_OUT_TIME);
                 $exception->setData('explorer_url', $payment['explorer_url']);
                 $exception->save();
@@ -39,22 +41,22 @@ class Ezdefi_Cryptocurrencypayment_Frontend_CallbackController extends Mage_Core
             }
         } else {
             $transactionId = $this->_request->getParam('id');
-            $explorerUrl = $this->_request->getParam('explorerUrl');
+            $explorerUrl   = $this->_request->getParam('explorerUrl');
 
-            $transaction = Mage::helper('cryptocurrencypayment/GatewayApi')->getTransaction($transactionId, $explorerUrl);
+            $transaction   = Mage::helper('cryptocurrencypayment/GatewayApi')->getTransaction($transactionId, $explorerUrl);
             $valueResponse = $transaction->value * pow(10, -$transaction->decimal);
 
             if ($transaction->status === 'ACCEPTED') {
                 $this->addException(null, $transaction->currency, $valueResponse, null, 1, 3, $transaction->explorerUrl);
                 $exceptionModel = $this->_exceptionFactory->create();
                 $exceptionModel->addData([
-                    'payment_id' => null,
-                    'order_id' => null,
-                    'currency' => $transaction->currency,
-                    'amount_id' => $valueResponse,
-                    'expiration' => $this->_date->gmtDate(),
-                    'paid' => 3,
-                    'has_amount' => 1,
+                    'payment_id'   => null,
+                    'order_id'     => null,
+                    'currency'     => $transaction->currency,
+                    'amount_id'    => $valueResponse,
+                    'expiration'   => $this->_date->gmtDate(),
+                    'paid'         => 3,
+                    'has_amount'   => 1,
                     'explorer_url' => $transaction->explorerUrl
                 ]);
                 $exceptionModel->save();
@@ -63,7 +65,8 @@ class Ezdefi_Cryptocurrencypayment_Frontend_CallbackController extends Mage_Core
         }
     }
 
-    private function setProcessingForOrder($orderId) {
+    private function setProcessingForOrder($orderId)
+    {
         $order = Mage::getModel('sales/order')->load($orderId);
         $order->setData('state', "processing");
         $order->setStatus("processing");

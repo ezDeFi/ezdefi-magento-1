@@ -26,7 +26,8 @@ class Ezdefi_Cryptocurrencypayment_Model_System_Config_Backend_Cryptocurrencies 
         $this->setValue(intval($this->getValue()));
     }
 
-    private function deleteCurrency($ids) {
+    private function deleteCurrency($ids)
+    {
         foreach ($ids as $id) {
             $currencyRecords = Mage::getModel('ezdefi_cryptocurrencypayment/currency')
                 ->getCollection()
@@ -37,20 +38,21 @@ class Ezdefi_Cryptocurrencypayment_Model_System_Config_Backend_Cryptocurrencies 
         }
     }
 
-    private function validateAddCurrency($currenciesData, $type) {
-        foreach($currenciesData as $currencyData) {
-            $id                 = isset($currencyData['id'])                 ? $currencyData['id'] : '';
-            $symbol             = isset($currencyData['symbol'])             ? $currencyData['symbol'] : '';
-            $name               = isset($currencyData['name'])               ? $currencyData['name'] : '';
-            $logo               = isset($currencyData['logo'])               ? $currencyData['logo'] : '';
-            $discount           = isset($currencyData['discount'])           ? $currencyData['discount'] : '';
-            $lifetime           = isset($currencyData['lifetime'])           ? $currencyData['lifetime'] : '';
-            $walletAddress      = isset($currencyData['wallet_address'])     ? $currencyData['wallet_address'] : '';
-            $blockConfirmation  = isset($currencyData['block_confirmation']) ? $currencyData['block_confirmation'] : '';
-            $decimal            = isset($currencyData['decimal'])            ? $currencyData['decimal'] : '';
-            $maxDecimal         = isset($currencyData['max_decimal'])        ? $currencyData['max_decimal'] : '';
+    private function validateAddCurrency($currenciesData, $type)
+    {
+        foreach ($currenciesData as $currencyData) {
+            $id                = isset($currencyData['id']) ? $currencyData['id'] : '';
+            $symbol            = isset($currencyData['symbol']) ? $currencyData['symbol'] : '';
+            $name              = isset($currencyData['name']) ? $currencyData['name'] : '';
+            $logo              = isset($currencyData['logo']) ? $currencyData['logo'] : '';
+            $discount          = isset($currencyData['discount']) ? $currencyData['discount'] : '';
+            $lifetime          = isset($currencyData['lifetime']) ? $currencyData['lifetime'] : '';
+            $walletAddress     = isset($currencyData['wallet_address']) ? $currencyData['wallet_address'] : '';
+            $blockConfirmation = isset($currencyData['block_confirmation']) ? $currencyData['block_confirmation'] : '';
+            $decimal           = isset($currencyData['decimal']) ? $currencyData['decimal'] : '';
+            $maxDecimal        = isset($currencyData['max_decimal']) ? $currencyData['max_decimal'] : '';
 
-            if($type === 'add') {
+            if ($type === 'add') {
                 if ($symbol == '') {
                     Mage::throwException(__('Currency symbol is required.'));
                 } else if ($name == '') {
@@ -61,21 +63,22 @@ class Ezdefi_Cryptocurrencypayment_Model_System_Config_Backend_Cryptocurrencies 
                     Mage::throwException(__('Currency logo is required.'));
                 }
             }
-            if($discount && (filter_var($discount,FILTER_VALIDATE_FLOAT) === false || (float)$discount > 100 || (float)$discount < 0)) {
+            if ($discount && (filter_var($discount, FILTER_VALIDATE_FLOAT) === false || (float)$discount > 100 || (float)$discount < 0)) {
                 Mage::throwException(__('Discount should be float and less than 100.'));
-            } else if ($lifetime && (filter_var($lifetime,FILTER_VALIDATE_INT) === false || (int)$lifetime < 0)) {
+            } else if ($lifetime && (filter_var($lifetime, FILTER_VALIDATE_INT) === false || (int)$lifetime < 0)) {
                 Mage::throwException(__('Payment life time is not a positive number.'));
             } else if ($walletAddress == '') {
                 Mage::throwException(__('Wallet address is required.'));
-            } else if($blockConfirmation && (filter_var($blockConfirmation, FILTER_VALIDATE_INT) === false || (int)$blockConfirmation < 0)) {
+            } else if ($blockConfirmation && (filter_var($blockConfirmation, FILTER_VALIDATE_INT) === false || (int)$blockConfirmation < 0)) {
                 Mage::throwException(__('Block confirmation is not a positive number.'));
-            } else if($decimal && (filter_var($decimal, FILTER_VALIDATE_INT) === false || $decimal < 2 || $decimal > $maxDecimal)) {
+            } else if ($decimal && (filter_var($decimal, FILTER_VALIDATE_INT) === false || $decimal < 2 || $decimal > $maxDecimal)) {
                 Mage::throwException(__('Decimal is invalid'));
             }
         }
     }
 
-    private function saveCurrency($currenciesData) {
+    private function saveCurrency($currenciesData)
+    {
         foreach ($currenciesData as $currencyData) {
             Mage::getModel('ezdefi_cryptocurrencypayment/currency')
                 ->setData([
@@ -84,7 +87,7 @@ class Ezdefi_Cryptocurrencypayment_Model_System_Config_Backend_Cryptocurrencies 
                     'symbol'             => $currencyData['symbol'],
                     'name'               => $currencyData['name'],
                     'discount'           => $currencyData['discount'] == '' ? 0 : $currencyData['discount'],
-                    'payment_lifetime'   => $currencyData['lifetime'] == '' ? 900: $currencyData['lifetime'] * 60,
+                    'payment_lifetime'   => $currencyData['lifetime'] == '' ? 900 : $currencyData['lifetime'] * 60,
                     'wallet_address'     => $currencyData['wallet_address'],
                     'block_confirmation' => $currencyData['block_confirmation'] == '' ? 1 : $currencyData['block_confirmation'],
                     'decimal'            => $currencyData['decimal'] == '' ? $currencyData['max_decimal'] : $currencyData['decimal'],
@@ -96,10 +99,11 @@ class Ezdefi_Cryptocurrencypayment_Model_System_Config_Backend_Cryptocurrencies 
         }
     }
 
-    private function updateCurrency($currenciesData) {
+    private function updateCurrency($currenciesData)
+    {
         foreach ($currenciesData as $currencyId => $currencyData) {
-            $collection =  Mage::getModel('ezdefi_cryptocurrencypayment/currency')->getCollection()->addFieldToFilter('currency_id', $currencyId);
-            $currency = $collection->getFirstItem();
+            $collection = Mage::getModel('ezdefi_cryptocurrencypayment/currency')->getCollection()->addFieldToFilter('currency_id', $currencyId);
+            $currency   = $collection->getFirstItem();
 
             $currency->setData('discount', $currencyData['discount'] == '' ? 0 : $currencyData['discount']);
             $currency->setData('payment_lifetime', $currencyData['lifetime'] == '' ? 900 : $currencyData['lifetime'] * 60);
