@@ -1,7 +1,8 @@
 <?php
-// app/code/local/Ezdefi/Cryptocurrencypayment/Model/Paymentmethod.php
-class Ezdefi_Cryptocurrencypayment_Model_Paymentmethod extends Mage_Payment_Model_Method_Abstract {
-    protected $_code  = 'cryptocurrencypayment';
+
+class Ezdefi_Cryptocurrencypayment_Model_Paymentmethod extends Mage_Payment_Model_Method_Abstract
+{
+    protected $_code          = 'ezdefi_cryptocurrencypayment';
     protected $_formBlockType = 'cryptocurrencypayment/form_cryptocurrencypayment';
     protected $_infoBlockType = 'cryptocurrencypayment/info_cryptocurrencypayment';
 
@@ -9,13 +10,11 @@ class Ezdefi_Cryptocurrencypayment_Model_Paymentmethod extends Mage_Payment_Mode
     {
         $info = $this->getInfoInstance();
 
-        if ($data->getCustomFieldOne())
-        {
+        if ($data->getCustomFieldOne()) {
             $info->setCustomFieldOne($data->getCustomFieldOne());
         }
 
-        if ($data->getCustomFieldTwo())
-        {
+        if ($data->getCustomFieldTwo()) {
             $info->setCustomFieldTwo($data->getCustomFieldTwo());
         }
 

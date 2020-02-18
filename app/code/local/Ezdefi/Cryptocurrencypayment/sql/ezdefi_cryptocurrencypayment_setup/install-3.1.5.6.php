@@ -1,4 +1,6 @@
 <?php
+CONST TIME_REMOVE_AMOUNT_ID = 3;
+CONST TIME_REMOVE_EXCEPTION = 7;
 
 $installer = $this;
 
@@ -235,5 +237,21 @@ $table = $installer->getConnection()
         'decimal'
     );
 $installer->getConnection()->createTable($table);
+
+$installer->run("
+    CREATE EVENT IF NOT EXISTS `ezdefi_remove_amount_id_event`
+    ON SCHEDULE EVERY ".TIME_REMOVE_AMOUNT_ID." DAY
+    STARTS DATE(NOW())
+    DO
+    DELETE FROM `{$installer->getTable('ezdefi_cryptocurrencypayment/amount')}` WHERE DATEDIFF( NOW( ) ,  expiration ) >= 86400;
+");
+
+$installer->run("
+    CREATE EVENT  IF NOT EXISTS `ezdefi_remove_exception_event`
+    ON SCHEDULE EVERY ".TIME_REMOVE_EXCEPTION." DAY
+    STARTS DATE(NOW())
+    DO
+    DELETE FROM `{$installer->getTable('ezdefi_cryptocurrencypayment/exception')}` WHERE DATEDIFF( NOW( ) ,  expiration ) >= 86400;
+");
 
 $installer->endSetup();
