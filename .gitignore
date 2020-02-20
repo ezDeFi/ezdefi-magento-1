@@ -47,6 +47,7 @@ app/design/adminhtml/default/default/*
 app/design/adminhtml/default/default/layout/*
 !app/design/adminhtml/default/default/layout/cryptocurrencypayment.xml
 
+
 app/design/frontend/*
 !app/design/frontend/base
 app/design/frontend/base/default/*
@@ -54,7 +55,9 @@ app/design/frontend/base/default/*
 app/design/frontend/base/default/layout/*
 !app/design/frontend/base/default/layout/cryptocurrencypayment.xml
 
-
+!app/design/frontend/base/default/template
+app/design/frontend/base/default/template/*
+!app/design/frontend/base/default/template/cryptocurrencypayment
 
 skin/adminhtml/default/default/*
 !skin/adminhtml/default/default/Ezdefi

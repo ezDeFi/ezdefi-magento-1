@@ -1,0 +1,34 @@
+<?php
+/**
+ * @var $this
+ */
+?>
+<div class="payment-content--ezdefi">
+    <div>
+        <?php echo $this->getPaymentId(); ?>
+    </div>
+    <div class="ezdefi-payment__value">
+        <span class="ezdefi-payment__origin-value--ezdefi"><?php echo $this->getOriginValue(); ?></span>
+        <span class="text-uppercase"> <?php echo $this->getOriginCurrency(); ?> </span>
+        <span><img src="<?php echo $this->getSkinUrl('Ezdefi/Cryptocurrencypayment/image/swap-icon.png'); ?>" alt="" class="ezdefi-payment__icon-convert display-inline"></span>
+        <span class="ezdefi-payment__currency-value--ezdefi"><?php echo $this->getCryptoValue(); ?></span>
+        <span class="text-uppercase"><?php echo $this->getCryptoCurrency(); ?></span>
+    </div>
+    <div class="ezdefi-payment__countdown-box">
+        <input type="hidden" id="ezdefi__payment-expiration--ezdefi" value="<?php echo $this->getExpiration() ?>">
+        <p>you have <span class="text-red text-bold" id="ezdefi__countdown-label--ezdefi"></span> to scan this QRcode</p>
+    </div>
+    <div class="qrcode-box">
+        <a href="" class="ezdefi-payment__deeplink" target="_blank">
+            <img src="<?php echo $this->getQrCode() ?>" alt="" class="ezdefi-payment__qr-code ezdefi-payment__qr-code--ezdefi">
+            <p class="margin-none">Scan QR Code or Click to pay</p>
+        </a>
+        <div class="timeout-notification timeout-notification--ezdefi reload-payment" data-suffixes="--ezdefi">
+            <p>Time out <br> Click to recreate payment</p>
+        </div>
+    </div>
+    <div class="ezdefi-payment__download-link">
+        <a href="https://ezdefi.com/ios" target="_blank"><img class="display-inline" src="<?php echo $this->getSkinUrl('Ezdefi/Cryptocurrencypayment/image/ios-icon.png'); ?>" alt=""></a>
+        <a href="https://ezdefi.com/android" target="_blank"><img class="display-inline" src="<?php echo $this->getSkinUrl('Ezdefi/Cryptocurrencypayment/image/android-icon.png'); ?>" alt=""></a>
+    </div>
+</div>
