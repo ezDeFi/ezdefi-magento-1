@@ -35,7 +35,6 @@
                        id="choose-ezdefi-method-radio"
                        name="choose-method-radio"
                        class="choose-method-radio"
-                       data-bind="event: {change: function() { testCheck() }}"
                        <?php if (!$this->checkEnableSimple()) {echo "checked";} ?>
                        value="ezdefi">
                 <label class="btn-show-payment--ezdefi btn-choose-payment-type <?php if (!$this->checkEnableSimple()) {echo "ezdefi__check-showed-payment";} ?>"

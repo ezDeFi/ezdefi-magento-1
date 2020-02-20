@@ -23,7 +23,7 @@ class Ezdefi_Cryptocurrencypayment_Frontend_PaymentController extends Mage_Core_
                         'originCurrency' => $order['base_currency_code']
                     ]
                 ])
-                ->setTemplate('cryptocurrencypayment/payment/simplemethod.phtml')
+                ->setTemplate('cryptocurrencypayment/payment/simpleMethod.phtml')
                 ->toHtml();
         } else if ($paymentType === 'ezdefi') {
             $payment = $this->createPaymentEzdefi($order, $cryptoCurrency);
@@ -35,7 +35,7 @@ class Ezdefi_Cryptocurrencypayment_Frontend_PaymentController extends Mage_Core_
                         'originValue' => $order['grand_total']
                     ]
                 ])
-                ->setTemplate('cryptocurrencypayment/payment/ezdefimethod.phtml')
+                ->setTemplate('cryptocurrencypayment/payment/ezdefiMethod.phtml')
                 ->toHtml();
         }
 
