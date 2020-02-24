@@ -11,7 +11,7 @@ class Ezdefi_Cryptocurrencypayment_Block_Form_Cryptocurrencypayment extends Mage
     public function getCoins()
     {
         $currencies = Mage::getModel('ezdefi_cryptocurrencypayment/currency')->getCollection()->setOrder('`order`', 'ASC')->getData();
-        $order = Mage::getSingleton('checkout/session')->getQuote();
+        $order      = Mage::getSingleton('checkout/session')->getQuote();
 
         $currenciesWithPrice = Mage::helper('cryptocurrencypayment/GatewayApi')->getCurrenciesWithPrice($currencies, $order['grand_total'], $order['base_currency_code']);
 
