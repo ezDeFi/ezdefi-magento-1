@@ -6,14 +6,13 @@ class Ezdefi_Cryptocurrencypayment_Frontend_PaymentController extends Mage_Core_
     {
         $orderId        = Mage::getSingleton('checkout/session')->getLastRealOrderId();
         $requests       = Mage::app()->getRequest()->getParams();
-        $currencyId     = $requests['currency_id'];
-        $cryptoCurrency = Mage::getModel('ezdefi_cryptocurrencypayment/currency')->getCollection()->addFieldToFilter('currency_id', $currencyId)->getData()[0];
+        $cryptoCurrency = Mage::helper('cryptocurrencypayment/GatewayApi')->getCurrency($requests['coin_id']);
         $order          = Mage::getModel('sales/order')->loadByIncrementId($orderId);
 
         $paymentType = $requests['type'];
 
         if ($paymentType === 'simple') {
-            $payment = $this->createPaymentSimple($order, $cryptoCurrency);
+            $payment = $this->createPaymentSimple($order, $requests['coin_id'], $cryptoCurrency);
 
             $block = $this->getLayout()
                 ->createBlock('cryptocurrencypayment/payment_simplemethod', 'render simple method block', [
@@ -42,35 +41,26 @@ class Ezdefi_Cryptocurrencypayment_Frontend_PaymentController extends Mage_Core_
         echo $block;
     }
 
-    private function createPaymentSimple($order, $cryptoCurrency)
+    private function createPaymentSimple($order, $coinId, $cryptoCurrency)
     {
-        $amountCollection = Mage::getModel('ezdefi_cryptocurrencypayment/amount');
         $originCurrency   = $order['base_currency_code'];
         $originValue      = $order['grand_total'];
-        $currencyExchange = Mage::helper('cryptocurrencypayment/GatewayApi')->getExchange($originCurrency, $cryptoCurrency['symbol']);
+        $currencyExchange = Mage::helper('cryptocurrencypayment/GatewayApi')->getExchange($originCurrency, $cryptoCurrency['token']['symbol']);
         $amount           = round($currencyExchange * $originValue * (100 - $cryptoCurrency['discount']) / 100, $cryptoCurrency['decimal']);;
-        $variation = Mage::getStoreConfig('payment/ezdefi_cryptocurrencypayment/acceptable_variation');
-
-        $amountId = (float)$amountCollection->getCollection()->createAmountId(
-            $cryptoCurrency['symbol'],
-            (float)$amount,
-            $cryptoCurrency['payment_lifetime'],
-            $cryptoCurrency['decimal'],
-            $variation
-        );
 
         $payment = Mage::helper('cryptocurrencypayment/GatewayApi')->createPayment([
             'uoid'     => $order['entity_id'] . '-1',
-//            'amountId' => true,
-            'value'    => $amountId,
-            'to'       => $cryptoCurrency['wallet_address'],
-            'currency' => $cryptoCurrency['symbol'] . ':' . $cryptoCurrency['symbol'],
-            'safedist' => $cryptoCurrency['block_confirmation'],
-            'duration' => $cryptoCurrency['payment_lifetime'],
+            'amountId' => true,
+            'coinId'   => $coinId,
+            'value'    => $amount,
+            'to'       => $cryptoCurrency['walletAddress'],
+            'currency' => $cryptoCurrency['token']['symbol'] . ':' . $cryptoCurrency['token']['symbol'],
+            'safedist' => $cryptoCurrency['blockConfirmation'],
+            'duration' => $cryptoCurrency['expiration'] * 60,
             'callback' => Mage::getUrl('ezdefi_frontend/callback/confirmorder')
         ]);
 
-        $this->addException($order, $cryptoCurrency, $payment->_id, $amountId, 1);
+        $this->addException($order, $cryptoCurrency, $payment->_id, $payment->value * pow(10, -$payment->decimal), 1);
 
         return $payment;
     }
@@ -79,15 +69,16 @@ class Ezdefi_Cryptocurrencypayment_Frontend_PaymentController extends Mage_Core_
     {
         $payment = Mage::helper('cryptocurrencypayment/GatewayApi')->createPayment([
             'uoid'     => $order['entity_id'] . '-0',
+            'amountId' => false,
             'value'    => $order['grand_total'] * (100 - $cryptoCurrency['discount']) / 100,
-            'to'       => $cryptoCurrency['wallet_address'],
-            'currency' => $order['base_currency_code'] . ':' . $cryptoCurrency['symbol'],
-            'safedist' => $cryptoCurrency['block_confirmation'],
-            'duration' => $cryptoCurrency['payment_lifetime'],
+            'to'       => $cryptoCurrency['walletAddress'],
+            'currency' => $order['base_currency_code'] . ':' . $cryptoCurrency['token']['symbol'],
+            'safedist' => $cryptoCurrency['blockConfirmation'],
+            'duration' => $cryptoCurrency['expiration'] * 60,
             'callback' => Mage::getUrl('ezdefi_frontend/callback/confirmorder')
         ]);
 
-        $cryptoValue = $payment->value * pow(10, -$payment->decimal);
+        $cryptoValue = $payment->value * pow(10, - $payment->decimal);
 
         $this->addException($order, $cryptoCurrency, $payment->_id, $cryptoValue, 0);
         return $payment;
@@ -95,13 +86,13 @@ class Ezdefi_Cryptocurrencypayment_Frontend_PaymentController extends Mage_Core_
 
     private function addException($order, $cryptoCurrency, $paymentId, $amountId, $hasAmount)
     {
-        $expiration = Mage::getModel('core/date')->gmtDate('Y-m-d H:i:s', strtotime('+' . $cryptoCurrency['payment_lifetime'] . ' second'));
+        $expiration = Mage::getModel('core/date')->gmtDate('Y-m-d H:i:s', strtotime('+' . ($cryptoCurrency['expiration'] * 60) . ' second'));
 
         $exceptionModel = Mage::getModel('ezdefi_cryptocurrencypayment/exception');
         $exceptionModel->setData([
             'payment_id' => $paymentId,
             'order_id'   => $order['entity_id'],
-            'currency'   => $cryptoCurrency['symbol'],
+            'currency'   => $cryptoCurrency['token']['symbol'],
             'amount_id'  => $amountId,
             'expiration' => $expiration,
             'paid'       => 0,
