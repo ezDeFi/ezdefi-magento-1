@@ -29,6 +29,11 @@ class Ezdefi_Cryptocurrencypayment_Helper_GatewayApi extends Mage_Core_Helper_Ab
         return $coins[$currencyKey];
     }
 
+    public function getCurrencies() {
+        $coins = json_decode(json_encode($this->getWebsiteData()->coins), true);
+        return $coins;
+    }
+
     public function getCurrenciesWithPrice($currencies, $price, $originCurrency) {
         $symbols = '';
         foreach ($currencies as $key => $currency) {
