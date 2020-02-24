@@ -48,14 +48,14 @@ $j( function() {
             $j('.loader--'+paymentType).css('display', 'flex');
 
             var that = this;
-            var currencyId = $j(selectors.selectCurrencyRadio+":checked").val();
+            var coinId = $j(selectors.selectCurrencyRadio+":checked").data('coin-id');
 
             $j.ajax({
                 url: '/ezdefi_frontend/payment/create',
                 method: "GET",
                 data: {
                     type: paymentType,
-                    currency_id: currencyId
+                    coin_id: coinId
                 },
                 success: function(response) {
                     if(paymentType === 'simple') {

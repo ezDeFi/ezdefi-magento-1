@@ -17,19 +17,31 @@ class Ezdefi_Cryptocurrencypayment_Helper_GatewayApi extends Mage_Core_Helper_Ab
         }
     }
 
+    public function getWebsiteData () {
+        $publicKey = Mage::getStoreConfig('payment/ezdefi_cryptocurrencypayment/public_key');
+        $webSiteData = $this->sendCurl('/website/' . $publicKey, 'GET');
+        return json_decode($webSiteData)->data;
+    }
+
+    public function getCurrency($id) {
+        $coins = json_decode(json_encode($this->getWebsiteData()->coins), true);
+        $currencyKey = array_search($id, array_column($coins, '_id'));
+        return $coins[$currencyKey];
+    }
+
     public function getCurrenciesWithPrice($currencies, $price, $originCurrency) {
         $symbols = '';
-        foreach ($currencies as $currency) {
-            $symbols .= $symbols === '' ? $currency['symbol'] : ','.$currency['symbol'];
+        foreach ($currencies as $key => $currency) {
+            $symbols .= $symbols === '' ? $currency->token->symbol : ','.$currency->token->symbol;
         }
-        $exchanges_response = $this->sendCurl('/token/exchanges?amount='.$price.'&from='.$originCurrency.'&to='.$symbols, 'GET');
+        $exchangesResponse = $this->sendCurl('/token/exchanges?amount='.$price.'&from='.$originCurrency.'&to='.$symbols, 'GET');
 
-        if($exchanges_response) {
-            $exchanges_data = json_decode($exchanges_response)->data;
-            foreach ($exchanges_data as $currency_exchange) {
+        if($exchangesResponse) {
+            $exchangesData = json_decode($exchangesResponse)->data;
+            foreach ($exchangesData as $currencyExchange) {
                 foreach ($currencies as $key => $currency) {
-                    if ($currency['symbol'] == $currency_exchange->token) {
-                        $currencies[$key]['price'] = round($currency_exchange->amount * ((100 - $currency['discount']) / 100), self::DEFAULT_DECIMAL_LIST_COIN);
+                    if ($currency->token->symbol == $currencyExchange->token) {
+                        $currencies[$key]->token->price = round($currencyExchange->amount * ((100 - $currency->discount) / 100), self::DEFAULT_DECIMAL_LIST_COIN);
                     }
                 }
             }
