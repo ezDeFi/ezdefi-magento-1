@@ -23,7 +23,7 @@
 
         <div class="qrcode-box simple-method-with-full-qrcode">
             <a href="" target="_blank" class="ezdefi-payment__deeplink ezdefi-payment__deeplink--simple">
-                <img src="<?php echo $this->getGatewayQrCode(); ?>" alt="" class="ezdefi-payment__qr-code--simple">
+                <img src="<?php echo $this->getGatewayQrCode(); ?>" alt="" class="ezdefi-payment__qr-code ezdefi-payment__qr-code--simple">
                 <p class="margin-none">Scan QR Code or Click to pay</p>
             </a>
             <div class="timeout-notification timeout-notification--simple reload-payment" data-suffixes="--simple">
@@ -32,7 +32,7 @@
         </div>
         <div class="qrcode-box simple-method-with-alternative-qrcode">
             <a href="" target="_blank" class="ezdefi-payment__deeplink ezdefi-payment__deeplink--simple">
-                <img src="https://chart.googleapis.com/chart?cht=qr&chl=<?php echo $this->getWalletAddress(); ?>&chs=200x200&chld=L|0" alt="" class="ezdefi-payment__qr-code--simple">
+                <img src="https://chart.googleapis.com/chart?cht=qr&chl=<?php echo $this->getWalletAddress(); ?>&chs=200x200&chld=L|0" alt="" class="ezdefi-payment__qr-code ezdefi-payment__qr-code--simple">
                 <p class="margin-none">Scan QR Code or Click to pay</p>
             </a>
             <div class="timeout-notification timeout-notification--simple reload-payment" data-suffixes="--simple">

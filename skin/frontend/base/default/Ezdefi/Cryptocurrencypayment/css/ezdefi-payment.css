@@ -84,6 +84,7 @@
     padding-top: 12px;
     user-select: none;
     cursor: pointer;
+    border-radius: 3px;
 }
 
 .ezdefi__btn-create-payment {
@@ -288,7 +289,7 @@ div.ezdefi-pay-box, div.simple-pay-box {
 
 .timeout-notification {
     display: none;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: bold;
     width: 100%;
     height: 100%;
@@ -335,6 +336,14 @@ div.ezdefi-pay-box, div.simple-pay-box {
     font-weight: 600;
     text-decoration-line: underline;
     cursor: pointer;
+}
+
+.ezdefi-method-label--logo {
+    padding-bottom: 10px;
+}
+
+.ezdefi-method-label--logo>img {
+    width: 70px;
 }
 
 .ezdefi__payment-currency--logo {
