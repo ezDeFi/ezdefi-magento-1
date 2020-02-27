@@ -1,8 +1,4 @@
-<?php
-/**
- * @var $this
- */
-?>
+<?php if(!$this->isError()): ?>
 <div class="payment-content--ezdefi">
     <div>
         <?php echo $this->getPaymentId(); ?>
@@ -32,3 +28,9 @@
         <a href="https://ezdefi.com/android" target="_blank"><img class="display-inline" src="<?php echo $this->getSkinUrl('Ezdefi/Cryptocurrencypayment/image/android-icon.png'); ?>" alt=""></a>
     </div>
 </div>
+<?php endif; ?>
+<?php if($this->isError()): ?>
+    <div class="payment-error--simple">
+        Can not create payment
+    </div>
+<?php endif; ?>

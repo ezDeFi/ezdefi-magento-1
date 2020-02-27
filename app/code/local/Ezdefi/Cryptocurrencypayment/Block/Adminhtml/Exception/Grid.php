@@ -47,7 +47,7 @@ class Ezdefi_Cryptocurrencypayment_Block_Adminhtml_Exception_Grid extends Mage_A
             'sortable' => true,
             'width'    => '60',
             'index'    => 'currency',
-            'type'     => 'options',
+            'type'     => 'text',
             'options'  => $this->getCurrencyOption(),
             'index'    => 'currency'
         ));

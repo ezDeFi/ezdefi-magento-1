@@ -6,13 +6,18 @@ class Ezdefi_Cryptocurrencypayment_Frontend_PaymentController extends Mage_Core_
     {
         $orderId        = Mage::getSingleton('checkout/session')->getLastRealOrderId();
         $requests       = Mage::app()->getRequest()->getParams();
-        $cryptoCurrency = Mage::helper('cryptocurrencypayment/GatewayApi')->getCurrency($requests['coin_id']);
         $order          = Mage::getModel('sales/order')->loadByIncrementId($orderId);
+        $cryptoCurrency = Mage::helper('cryptocurrencypayment/GatewayApi')->getCurrency($requests['coin_id']);
+
 
         $paymentType = $requests['type'];
 
         if ($paymentType === 'simple') {
-            $payment = $this->createPaymentSimple($order, $requests['coin_id'], $cryptoCurrency);
+            if($requests['coin_id']) {
+                $payment = $this->createPaymentSimple($order, $requests['coin_id'], $cryptoCurrency);
+            } else {
+                $payment = null;
+            }
 
             $block = $this->getLayout()
                 ->createBlock('cryptocurrencypayment/payment_simplemethod', 'render simple method block', [
@@ -25,7 +30,11 @@ class Ezdefi_Cryptocurrencypayment_Frontend_PaymentController extends Mage_Core_
                 ->setTemplate('cryptocurrencypayment/payment/simpleMethod.phtml')
                 ->toHtml();
         } else if ($paymentType === 'ezdefi') {
-            $payment = $this->createPaymentEzdefi($order, $cryptoCurrency);
+            if($requests['coin_id']) {
+                $payment = $this->createPaymentEzdefi($order, $cryptoCurrency);
+            } else {
+                $payment = null;
+            }
 
             $block = $this->getLayout()
                 ->createBlock('cryptocurrencypayment/payment_ezdefimethod', 'render simple method block', [
