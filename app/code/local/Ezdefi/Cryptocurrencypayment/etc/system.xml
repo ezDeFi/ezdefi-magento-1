@@ -17,6 +17,7 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
                             <sort_order>1</sort_order>
+                            <frontend_class>required-entry</frontend_class>
                         </title>
                         <active translate="label">
                             <label>Enable</label>
@@ -44,7 +45,7 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
                             <sort_order>3</sort_order>
-                            <comment><![CDATA[<a href="https://merchant.ezdefi.com/register" target="_blank"> Resgister to get API Key </a>]]></comment>
+                            <comment><![CDATA[<a href="https://merchant.ezdefi.com/register" target="_blank"> Register to get API Key </a>]]></comment>
                         </api_key>
                         <public_key translate="label">
                             <label>Public key</label>

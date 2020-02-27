@@ -33,12 +33,12 @@ $j( function() {
         },
 
         enablePlaceOrder: function () {
-
             $j(document).on('change', selectors.selectCurrencyRadio, function () {
                 let inputId = $j(selectors.selectCurrencyRadio + ":checked").attr('id');
                 $j(selectors.selectCurrencyLabel).css('border', '1px solid #d8d8d8').css('background', 'inherit');
                 $j(selectors.selectCurrencyLabel + "[for='" + inputId + "']").css('border', '2px solid #54bdff').css('background', '#c0dcf9db');
-                $j(selectors.buttonCreatePayment).prop('disabled', false);
+                $j(selectors.btnPlaceOrder).css({background: 'cornflowerblue', cursor: 'pointer'});
+                $j(selectors.btnCreatePayment).css({background: 'cornflowerblue', cursor: 'pointer'});
             });
         },
 
@@ -113,6 +113,10 @@ $j( function() {
             $j(selectors.selectCurrencyBox).css('display', 'block');
             $j(selectors.paymentBox).css('display', 'none');
             // $j("#ezdefi__select-currency--checkbox").prop('checked', false);
+            $j(selectors.selectCurrencyLabel).css({background: 'transparent', border: '1px solid #d8d8d8'});
+            $j(selectors.btnCreatePayment).css({background: '#999', cursor: 'not-allowed'});
+            $j(selectors.selectCurrencyRadio).prop('checked', false);
+
             clearInterval(this.countDownInterval.simple);
             clearInterval(this.countDownInterval.ezdefi);
 
@@ -131,6 +135,10 @@ $j( function() {
         },
 
         afterPlaceOrder: function() {
+            var coinId = $j(selectors.selectCurrencyRadio+":checked").data('coin-id');
+            console.log(coinId);
+            if(!coinId) {return;}
+
             var that = this;
             ezdefiCustomPayment.save(function () {
                 ezdefiReview.save(function () {
@@ -204,7 +212,8 @@ $j( function() {
             $j(".payment-box").css('display', 'none');
             $j(".simple-pay-box").css('display', 'block');
 
-            if(!$j(selectors.simpleMethodContent).html().trim()) {
+            var coinId = $j(selectors.selectCurrencyRadio+":checked").data('coin-id');
+            if(!$j(selectors.simpleMethodContent).html().trim() && coinId) {
                 this.createPayment('simple');
             }
         },
@@ -216,7 +225,8 @@ $j( function() {
             $j(".payment-box").css('display', 'none');
             $j(".ezdefi-pay-box").css('display', 'block');
 
-            if(!$j(selectors.ezdefiMethodContent).html().trim()) {
+            var coinId = $j(selectors.selectCurrencyRadio+":checked").data('coin-id');
+            if(!$j(selectors.ezdefiMethodContent).html().trim() && coinId) {
                 this.createPayment('ezdefi');
             }
         }

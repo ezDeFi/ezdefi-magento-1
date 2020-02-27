@@ -8,6 +8,11 @@ class Ezdefi_Cryptocurrencypayment_Block_Payment_EzdefiMethod extends Mage_Core_
         $this->setTemplate('cryptocurrencypayment/payment/ezdefimethod.phtml');
     }
 
+    public function isError()
+    {
+        return !$this->_data['payment'];
+    }
+
     public function getPaymentId()
     {
         return $this->_data['payment']->_id;
