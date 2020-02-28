@@ -26,7 +26,7 @@ class Ezdefi_Cryptocurrencypayment_Block_Adminhtml_Exception_Column_Amount exten
 
         $amountHtml = '<p>' . $amount . '</p>';
         if (!$orderId) {
-            $amountHtml .= '<a href="' . $explorerUrl . '" target="_blank">' . substr($explorerUrl, 0, 50) . '</a>';
+            $amountHtml .= '<a href="' . $explorerUrl . '" target="_blank">View Transaction Detail</a>';
         }
 
         $items['amount_id'] = $amountHtml;
