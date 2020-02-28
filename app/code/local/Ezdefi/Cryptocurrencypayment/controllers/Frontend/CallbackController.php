@@ -47,22 +47,27 @@ class Ezdefi_Cryptocurrencypayment_Frontend_CallbackController extends Mage_Core
             $valueResponse = $transaction->value * pow(10, -$transaction->decimal);
 
             if ($transaction->status === 'ACCEPTED') {
-                $this->addException(null, $transaction->currency, $valueResponse, null, 1, 3, $transaction->explorerUrl);
-                $exceptionModel = $this->_exceptionFactory->create();
-                $exceptionModel->addData([
-                    'payment_id'   => null,
-                    'order_id'     => null,
-                    'currency'     => $transaction->currency,
-                    'amount_id'    => $valueResponse,
-                    'expiration'   => $this->_date->gmtDate(),
-                    'paid'         => 3,
-                    'has_amount'   => 1,
-                    'explorer_url' => $transaction->explorerUrl
-                ]);
-                $exceptionModel->save();
+                $this->addException($transaction->currency, $valueResponse,$transaction->explorerUrl);
             }
             return $this->getResponse()->setBody(json_encode(['order_success' => "unknown transaction"]));
         }
+    }
+
+    private function addException($cryptoCurrency, $valueResponse, $exploreUrl)
+    {
+        $expiration = Mage::getModel('core/date')->gmtDate('Y-m-d H:i:s');
+        $exceptionModel = Mage::getModel('ezdefi_cryptocurrencypayment/exception');
+        $exceptionModel->setData([
+            'payment_id' => null,
+            'order_id'   => null,
+            'currency'   => $cryptoCurrency,
+            'amount_id'  => $valueResponse,
+            'expiration' => $expiration,
+            'paid'       => 3,
+            'has_amount' => 1,
+            'explorer_url' => $exploreUrl
+        ]);
+        $exceptionModel->save();
     }
 
     private function setProcessingForOrder($orderId)

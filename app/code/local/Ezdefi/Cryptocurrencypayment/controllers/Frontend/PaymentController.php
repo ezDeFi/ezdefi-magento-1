@@ -116,9 +116,6 @@ class Ezdefi_Cryptocurrencypayment_Frontend_PaymentController extends Mage_Core_
         $order   = Mage::getModel('sales/order')->loadByIncrementId($orderId);
 
         if ($order->getStatus() === 'processing') {
-//            $this->_cart->setLastOrderId(null)
-//                ->setLastRealOrderId(null)
-//                ->setLastOrderStatus(null);
             $this->getResponse()->setBody(json_encode(['orderStatus' => 'processing']));
         } else {
             $this->getResponse()->setBody(json_encode(['orderStatus' => 'pending']));

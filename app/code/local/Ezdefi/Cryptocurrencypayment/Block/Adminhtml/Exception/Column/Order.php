@@ -22,7 +22,7 @@ class Ezdefi_Cryptocurrencypayment_Block_Adminhtml_Exception_Column_Order extend
             }
             $explorerUrlRow = isset($explorerUrl) ? '<tr>
                                 <td class="border-none">Explorer url</td>
-                                <td class="border-none"><a target="_blank" href="'.$explorerUrl.'"><span style="word-break: break-all">'.substr($explorerUrl, 0, 50).'</span></a></td>
+                                <td class="border-none"><a target="_blank" href="'.$explorerUrl.'"><span style="word-break: break-all">View Transaction Detail</span></a></td>
                             </tr>' : '';
             $orderHtml .= '<table>
                         <tbody>
