@@ -29,7 +29,7 @@ $j( function() {
             $j(document).on('click', selectors.btnPlaceOrder, this.afterPlaceOrder.bind(this));
             $j(document).on('click', selectors.btnCreatePayment, this.checkDefaultPaymentToCreate.bind(this));
             $j(document).on('change', selectors.btnChooseMethod, this.checkPaymentToCreate.bind(this));
-            $j(document).on('click', selectors.btnChangeCurrency, this.changeCurrency.bind(this));18
+            $j(document).on('click', selectors.btnChangeCurrency, this.changeCurrency.bind(this));
         },
 
         enablePlaceOrder: function () {
@@ -112,10 +112,6 @@ $j( function() {
         changeCurrency: function () {
             $j(selectors.selectCurrencyBox).css('display', 'block');
             $j(selectors.paymentBox).css('display', 'none');
-            // $j("#ezdefi__select-currency--checkbox").prop('checked', false);
-            $j(selectors.selectCurrencyLabel).css({background: 'transparent', border: '1px solid #d8d8d8'});
-            $j(selectors.btnCreatePayment).css({background: '#999', cursor: 'not-allowed'});
-            $j(selectors.selectCurrencyRadio).prop('checked', false);
 
             clearInterval(this.countDownInterval.simple);
             clearInterval(this.countDownInterval.ezdefi);
