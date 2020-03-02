@@ -2,22 +2,24 @@
 
 class Ezdefi_Cryptocurrencypayment_Block_Form_Cryptocurrencypayment extends Mage_Payment_Block_Form
 {
+    private $websiteData;
+
     protected function _construct()
     {
+        $this->websiteData = Mage::helper('cryptocurrencypayment/GatewayApi')->getWebsiteData();
         parent::_construct();
         $this->setTemplate('cryptocurrencypayment/form/cryptocurrencypayment.phtml');
     }
 
     public function getCoins()
     {
-        $websiteData         = Mage::helper('cryptocurrencypayment/GatewayApi')->getWebsiteData();
-        $currencies          = $websiteData->coins;
+        $currencies          = $this->websiteData->coins;
         $order               = Mage::getSingleton('checkout/session')->getQuote();
         $currenciesWithPrice = Mage::helper('cryptocurrencypayment/GatewayApi')->getCurrenciesWithPrice($currencies, $order['grand_total'], $order['base_currency_code']);
-        $html = '';
+        $html                = '';
 
         foreach ($currenciesWithPrice as $key => $currency) {
-            $html .= '<label class="ezdefi__select-currency--label" for="ezdefi__select-currency-' . $currency->token->_id . '" >';;
+            $html .= '<label class="ezdefi__select-currency--label" for="ezdefi__select-currency-' . $currency->token->_id . '" >';
 
             if ($currency->token->description) {
                 $html .= '<img src="' . $currency->token->logo . '" alt="" class="ezdefi-select-currency-item--logo" title="' . $currency->token->description . '">';
@@ -42,21 +44,22 @@ class Ezdefi_Cryptocurrencypayment_Block_Form_Cryptocurrencypayment extends Mage
 
     public function checkEnableSimple()
     {
-        $paymentMethod = Mage::getStoreConfig('payment/ezdefi_cryptocurrencypayment/payment_method');
-        return strpos($paymentMethod, 'simple') !== false;
+        return $this->websiteData->website->payAnyWallet;
     }
 
     public function checkEnableEzdefi()
     {
-        $paymentMethod = Mage::getStoreConfig('payment/ezdefi_cryptocurrencypayment/payment_method');
-        return strpos($paymentMethod, 'ezdefi') !== false;
+        return $this->websiteData->website->payEzdefiWallet;
     }
 
     public function checkEnableOneMethod()
     {
-        $paymentMethod = Mage::getStoreConfig('payment/ezdefi_cryptocurrencypayment/payment_method');
-        $methodArray   = explode(',', $paymentMethod);
-        return count($methodArray) === 1;
+        if ($this->websiteData->website->payAnyWallet && !$this->websiteData->website->payEzdefiWallet ||
+            !$this->websiteData->website->payAnyWallet && $this->websiteData->website->payEzdefiWallet
+        ) {
+            return true;
+        }
+        return false;
     }
 
 }
