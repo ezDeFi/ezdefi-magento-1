@@ -1,4 +1,13 @@
 <div class="form-list" id="payment_form_<?php echo $this->getMethodCode() ?>" style="display:none;">
+
+    <div class="ezdefi__coin-choosed-label">
+        <img alt="" class="ezdefi__payment-currency--logo tooltip-show-discount" data-toggle="popover"
+             title="Discount" data-placement="top" data-content="Discount:" data-trigger="hover">
+        <span class="ezdefi__payment-currency--name tooltip-show-discount" data-toggle="popover" title="Discount"
+              data-placement="top" data-content="Discount:" data-trigger="hover"></span>
+        <span class="wide-space"></span>
+    </div>
+
     <div class="ezdefi__select-currency-box">
         <div class="ezdefi__select-currency--list">
             <?php echo $this->getCoins(); ?>

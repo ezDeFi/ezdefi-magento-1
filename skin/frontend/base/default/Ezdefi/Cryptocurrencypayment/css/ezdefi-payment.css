@@ -122,14 +122,22 @@
     margin-bottom: 30px;
 }
 
-.ezdefi-payment__header {
+.ezdefi__coin-choosed-label, .ezdefi-payment__header {
     width: 100%;
     border-radius: 10px;
     background-color: #eee;
     padding: 7px 20px;
     box-sizing: border-box;
-    display: flex;
     align-items: center;
+    margin: 25px 0;
+}
+
+.ezdefi__coin-choosed-label {
+    display: none;
+}
+
+.ezdefi-payment__header {
+    display: flex;
 }
 
 .ezdefi-payment__currency-logo {
