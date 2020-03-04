@@ -13,7 +13,7 @@ class Ezdefi_Cryptocurrencypayment_Frontend_PaymentController extends Mage_Core_
         $paymentType = $requests['type'];
 
         if ($paymentType === 'simple') {
-            if($requests['coin_id']) {
+            if ($requests['coin_id']) {
                 $payment = $this->createPaymentSimple($order, $requests['coin_id'], $cryptoCurrency);
             } else {
                 $payment = null;
@@ -30,8 +30,8 @@ class Ezdefi_Cryptocurrencypayment_Frontend_PaymentController extends Mage_Core_
                 ->setTemplate('cryptocurrencypayment/payment/simpleMethod.phtml')
                 ->toHtml();
         } else if ($paymentType === 'ezdefi') {
-            if($requests['coin_id']) {
-                $payment = $this->createPaymentEzdefi($order, $cryptoCurrency);
+            if ($requests['coin_id']) {
+                $payment = $this->createPaymentEzdefi($order, $requests['coin_id'], $cryptoCurrency);
             } else {
                 $payment = null;
             }
@@ -74,11 +74,11 @@ class Ezdefi_Cryptocurrencypayment_Frontend_PaymentController extends Mage_Core_
         return $payment;
     }
 
-    private function createPaymentEzdefi($order, $cryptoCurrency)
+    private function createPaymentEzdefi($order, $coinId, $cryptoCurrency)
     {
         $payment = Mage::helper('cryptocurrencypayment/GatewayApi')->createPayment([
             'uoid'     => $order['entity_id'] . '-0',
-            'amountId' => false,
+            'coinId'   => $coinId,
             'value'    => $order['grand_total'] * (100 - $cryptoCurrency['discount']) / 100,
             'to'       => $cryptoCurrency['walletAddress'],
             'currency' => $order['base_currency_code'] . ':' . $cryptoCurrency['token']['symbol'],
@@ -87,7 +87,7 @@ class Ezdefi_Cryptocurrencypayment_Frontend_PaymentController extends Mage_Core_
             'callback' => Mage::getUrl('ezdefi_frontend/callback/confirmorder')
         ]);
 
-        $cryptoValue = $payment->value * pow(10, - $payment->decimal);
+        $cryptoValue = $payment->value * pow(10, -$payment->decimal);
 
         $this->addException($order, $cryptoCurrency, $payment->_id, $cryptoValue, 0);
         return $payment;
