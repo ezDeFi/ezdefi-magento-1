@@ -57,10 +57,10 @@ $j(function () {
             method: 'get',
             asynchronous: false,
             onSuccess: function (response) {
-                let validateTrueEmailMsg = "This Api Key is invalid";
+                let validateApiKeyMsg = "This Api Key is invalid";
                 let status = eval('(' + response.responseText + ')');
                 if (status === false) {
-                    Validation.get('validate-api-key').error = validateTrueEmailMsg;
+                    Validation.get('validate-api-key').error = validateApiKeyMsg;
                     ok = false;
                 } else {
                     ok = true;
@@ -82,10 +82,10 @@ $j(function () {
             method: 'get',
             asynchronous: false,
             onSuccess: function (response) {
-                let validateTrueEmailMsg = "This Public Key is invalid";
+                let validateSiteIdMsg = "This Site Id is invalid";
                 let status = eval('(' + response.responseText + ')');
                 if (status === false) {
-                    Validation.get('validate-public-key').error = validateTrueEmailMsg;
+                    Validation.get('validate-public-key').error = validateSiteIdMsg ;
                     ok = false;
                 } else {
                     ok = true;

@@ -35,7 +35,8 @@ class Ezdefi_Cryptocurrencypayment_Block_Payment_EzdefiMethod extends Mage_Core_
 
     public function getCryptoValue()
     {
-        return __($this->_data['payment']->value * pow(10, -$this->_data['payment']->decimal));
+        $cryptoValue = $this->_data['payment']->value * pow(10, -$this->_data['payment']->decimal);
+        return __(Mage::helper('cryptocurrencypayment/GatewayApi')->convertExponentialToFloat($cryptoValue ));
     }
 
     public function getQrCode()
