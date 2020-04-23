@@ -1,8 +1,5 @@
 <?php if(!$this->isError()): ?>
 <div class="payment-content--ezdefi">
-    <div>
-        <?php echo $this->getPaymentId(); ?>
-    </div>
     <div class="ezdefi-payment__value">
         <span class="ezdefi-payment__origin-value--ezdefi"><?php echo $this->getOriginValue(); ?></span>
         <span class="text-uppercase"> <?php echo $this->getOriginCurrency(); ?> </span>
@@ -15,7 +12,7 @@
         <p>you have <span class="text-red text-bold" id="ezdefi__countdown-label--ezdefi"></span> to scan this QRcode</p>
     </div>
     <div class="qrcode-box">
-        <a href="" class="ezdefi-payment__deeplink" target="_blank">
+        <a href="<?php echo $this->getDeepLink() ?>" class="ezdefi-payment__deeplink" target="_blank">
             <img src="<?php echo $this->getQrCode() ?>" alt="" class="ezdefi-payment__qr-code ezdefi-payment__qr-code--ezdefi">
             <p class="margin-none">Scan QR Code or Click to pay</p>
         </a>

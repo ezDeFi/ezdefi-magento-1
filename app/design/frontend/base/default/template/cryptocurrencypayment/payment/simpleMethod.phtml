@@ -2,7 +2,6 @@
     <div class="payment-content--simple" data-bind="style:{'display': 'none'}">
         <input type="radio" name="choose-simple-method-qrcode-input" class="hidden" id="choose-full-qrcode-radio" checked>
         <input type="radio" name="choose-simple-method-qrcode-input" class="hidden" id="choose-alternative-qrcode-radio">
-        <p><?php echo $this->getPaymentId(); ?></p>
         <div class="ezdefi__alert-copy-address">
             <strong>Success</strong> Address was copied to the clipboard.
         </div>
@@ -22,7 +21,7 @@
         </div>
 
         <div class="qrcode-box simple-method-with-full-qrcode">
-            <a href="" target="_blank" class="ezdefi-payment__deeplink ezdefi-payment__deeplink--simple">
+            <a href="<?php echo $this->getDeepLink() ?>" target="_blank" class="ezdefi-payment__deeplink ezdefi-payment__deeplink--simple">
                 <img src="<?php echo $this->getGatewayQrCode(); ?>" alt="" class="ezdefi-payment__qr-code ezdefi-payment__qr-code--simple">
                 <p class="margin-none">Scan QR Code or Click to pay</p>
             </a>
@@ -31,7 +30,7 @@
             </div>
         </div>
         <div class="qrcode-box simple-method-with-alternative-qrcode">
-            <a href="" target="_blank" class="ezdefi-payment__deeplink ezdefi-payment__deeplink--simple">
+            <a href="<?php echo $this->getDeepLink() ?>" target="_blank" class="ezdefi-payment__deeplink ezdefi-payment__deeplink--simple">
                 <img src="https://chart.googleapis.com/chart?cht=qr&chl=<?php echo $this->getWalletAddress(); ?>&chs=200x200&chld=L|0" alt="" class="ezdefi-payment__qr-code ezdefi-payment__qr-code--simple">
                 <p class="margin-none">Scan QR Code or Click to pay</p>
             </a>

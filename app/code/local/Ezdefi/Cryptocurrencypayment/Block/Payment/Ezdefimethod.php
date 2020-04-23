@@ -48,4 +48,9 @@ class Ezdefi_Cryptocurrencypayment_Block_Payment_EzdefiMethod extends Mage_Core_
     {
         return __($this->_data['payment']->expiredTime);
     }
+
+    public function getDeepLink()
+    {
+        return __($this->_data['payment']->deepLink);
+    }
 }

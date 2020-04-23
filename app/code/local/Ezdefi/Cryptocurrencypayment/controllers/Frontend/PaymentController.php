@@ -57,7 +57,7 @@ class Ezdefi_Cryptocurrencypayment_Frontend_PaymentController extends Mage_Core_
         $originValue      = $order['grand_total'];
         $currencyExchange = Mage::helper('cryptocurrencypayment/GatewayApi')->getExchange($originCurrency, $cryptoCurrency['token']['symbol']);
         $amount           = $currencyExchange * $originValue * (100 - $cryptoCurrency['discount']) / 100;
-        $value = Mage::helper('cryptocurrencypayment/GatewayApi')->convertExponentialToFloat($amount);
+        $value = Mage::helper('cryptocurrencypayment/GatewayApi')->convertExponentialToFloat($amount, $cryptoCurrency['decimal']);
 
         $payment = Mage::helper('cryptocurrencypayment/GatewayApi')->createPayment([
             'uoid'     => $order['entity_id'] . '-1',

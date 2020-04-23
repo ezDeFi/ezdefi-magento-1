@@ -52,4 +52,9 @@ class Ezdefi_Cryptocurrencypayment_Block_Payment_SimpleMethod extends Mage_Core_
     {
         return __($this->_data['payment']->to);
     }
+
+    public function getDeepLink()
+    {
+        return __($this->_data['payment']->deepLink);
+    }
 }
