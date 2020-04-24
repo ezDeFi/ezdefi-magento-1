@@ -1,11 +1,10 @@
 <?php
 
-class Ezdefi_Cryptocurrencypayment_Block_Adminhtml_Exception_Column_Order extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Abstract
+class Ezdefi_Cryptocurrencypayment_Block_Adminhtml_ExceptionArchived_Column_Order extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Abstract
 {
 
     public function render(Varien_Object $row)
     {
-        $exceptionId =  $row->getId();
         $orderId = $row->getIncrementId();
 
         if($orderId) {
@@ -34,14 +33,14 @@ class Ezdefi_Cryptocurrencypayment_Block_Adminhtml_Exception_Column_Order extend
                 </tbody>
             </table>';
         }
-        $urlGetOrderPending = Mage::helper("adminhtml")->getUrl('*/*/getOrderPending');
-        $urlAssign = Mage::helper("adminhtml")->getUrl('*/*/assign/exception_id/'.$exceptionId);
-
-        $orderHtml .= '<select class="ezdefi__select-pending-order" style="width: 300px" data-check-loaded="1" data-url-get-order="'.$urlGetOrderPending.'">
-                        <option value=""></option>
-                    </select>
-                    <button class="ezdefi__btn-assign-order"
-                        data-url-assign="'.$urlAssign.'" data-order-to-assign="">Assign</button>';
+        //$urlGetOrderPending = Mage::helper("adminhtml")->getUrl('*/*/getOrderPending');
+        //$urlAssign = Mage::helper("adminhtml")->getUrl('*/*/assign/exception_id/'.$exceptionId);
+        //
+        //$orderHtml .= '<select class="ezdefi__select-pending-order" style="width: 300px" data-check-loaded="1" data-url-get-order="'.$urlGetOrderPending.'">
+        //                <option value=""></option>
+        //            </select>
+        //            <button class="ezdefi__btn-assign-order"
+        //                data-url-assign="'.$urlAssign.'" data-order-to-assign="">Assign</button>';
 
         return $orderHtml;
     }

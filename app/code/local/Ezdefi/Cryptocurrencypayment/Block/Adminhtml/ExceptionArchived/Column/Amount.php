@@ -1,6 +1,6 @@
 <?php
 
-class Ezdefi_Cryptocurrencypayment_Block_Adminhtml_Exception_Column_Amount extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Abstract
+class Ezdefi_Cryptocurrencypayment_Block_Adminhtml_ExceptionArchived_Column_Amount extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Abstract
 {
 
     public function render(Varien_Object $row)

@@ -1,6 +1,6 @@
 <?php
 
-class Ezdefi_Cryptocurrencypayment_Block_Adminhtml_Exception_Grid extends Mage_Adminhtml_Block_Widget_Grid
+class Ezdefi_Cryptocurrencypayment_Block_Adminhtml_ExceptionArchived_Grid extends Mage_Adminhtml_Block_Widget_Grid
 {
     public function __construct()
     {
@@ -33,7 +33,7 @@ class Ezdefi_Cryptocurrencypayment_Block_Adminhtml_Exception_Grid extends Mage_A
                 'date' => 'od.created_at',
                 'increment_id' => 'od.increment_id'
             ))
-            ->where('main_table.order_assigned IS NULL AND main_table.explorer_url is NOT NULL')
+            ->where('main_table.confirmed = 0 AND main_table.explorer_url is NULL')
             ->order('id DESC');
 
         $this->setCollection($collection);
@@ -64,7 +64,7 @@ class Ezdefi_Cryptocurrencypayment_Block_Adminhtml_Exception_Grid extends Mage_A
             'width'                     => '60',
             'type'                      => 'text',
             'index'                     => 'amount_id',
-            'renderer'                  => 'Ezdefi_Cryptocurrencypayment_Block_Adminhtml_Exception_Column_Amount',
+            'renderer'                  => 'Ezdefi_Cryptocurrencypayment_Block_Adminhtml_ExceptionArchived_Column_Amount',
             'filter_condition_callback' => array($this, '_filterAmountIdConditionCallback')
         ));
 
@@ -72,7 +72,7 @@ class Ezdefi_Cryptocurrencypayment_Block_Adminhtml_Exception_Grid extends Mage_A
             'header'   => 'Order',
             'sortable' => true,
             'width'    => '60',
-            'renderer' => 'Ezdefi_Cryptocurrencypayment_Block_Adminhtml_Exception_Column_Order',
+            'renderer' => 'Ezdefi_Cryptocurrencypayment_Block_Adminhtml_ExceptionArchived_Column_Order',
             'index'    => 'increment_id'
         ));
 
@@ -80,7 +80,7 @@ class Ezdefi_Cryptocurrencypayment_Block_Adminhtml_Exception_Grid extends Mage_A
             'header'   => 'Payment Info',
             'width'    => '60',
             'index'    => 'payment_id',
-            'renderer' => 'Ezdefi_Cryptocurrencypayment_Block_Adminhtml_Exception_Column_PaymentInformation',
+            'renderer' => 'Ezdefi_Cryptocurrencypayment_Block_Adminhtml_ExceptionArchived_Column_PaymentInformation',
             'sortable' => false,
             'filter'   => false,
         ));
@@ -90,7 +90,7 @@ class Ezdefi_Cryptocurrencypayment_Block_Adminhtml_Exception_Grid extends Mage_A
                 'header'   => 'Action',
                 'width'    => '100',
                 'type'     => 'action',
-                'renderer' => 'Ezdefi_Cryptocurrencypayment_Block_Adminhtml_Exception_Column_Action',
+                'renderer' => 'Ezdefi_Cryptocurrencypayment_Block_Adminhtml_ExceptionArchived_Column_Action',
                 'index'    => 'action',
                 'filter'   => false,
                 'sortable' => false,
