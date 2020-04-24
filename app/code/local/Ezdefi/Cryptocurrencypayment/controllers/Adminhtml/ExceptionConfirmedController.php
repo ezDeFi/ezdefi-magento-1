@@ -1,14 +1,13 @@
 <?php
 
 
-class Ezdefi_Cryptocurrencypayment_Adminhtml_ExceptionController extends Mage_Adminhtml_Controller_Action
+class Ezdefi_Cryptocurrencypayment_Adminhtml_ExceptionConfirmedController extends Mage_Adminhtml_Controller_Action
 {
 
     protected function _isAllowed()
     {
         return Mage::getSingleton('admin/session')->isAllowed('admingrid/adgrid');
     }
-
 
     public function indexAction()
     {
@@ -29,29 +28,37 @@ class Ezdefi_Cryptocurrencypayment_Adminhtml_ExceptionController extends Mage_Ad
         $this->_redirect("*/*/");
     }
 
-    public function assignAction()
+    public function revertAction()
     {
-        $requests        = Mage::app()->getRequest()->getParams();
-        $exceptionId     = $requests['exception_id'];
-        $orderIdToAssign = $requests['order_id'];
+        $requests    = Mage::app()->getRequest()->getParams();
+        $exceptionId = $requests['exception_id'];
+        $exception   = Mage::getModel('ezdefi_cryptocurrencypayment/exception')
+            ->load($exceptionId);
 
-        $exception = Mage::getModel('ezdefi_cryptocurrencypayment/exception')->load($exceptionId);
-        $exception->setData('order_assigned', $orderIdToAssign);
-        $exception->setData('confirmed', 1);
+        if($exception['order_id'] && $exception['order_assigned'] != $exception['order_id'] && $exception['paid'] == 1) {
+            $this->setStatusForOrder($exception['order_id'], 'processing', 'processing');
+        }
+
+        $this->setStatusForOrder($exception['order_assigned'], 'pending', 'pending');
+
+        $exception->setData('order_assigned', NULL);
         $exception->save();
 
-        if($exception['order_id']  && $orderIdToAssign  != $exception['order_id']) {
-            $this->setStatusForOrder($exception['order_id'], 'pending', 'pending');
-        }
-        $this->setStatusForOrder($orderIdToAssign, 'processing', 'processing');
-
-        if($exception['order_id']) {
-            //delete exception with order_id = exception.order_id
-            $exceptionsToDelete = Mage::getModel('ezdefi_cryptocurrencypayment/exception')
+        if(!$exception['explorer_url']) {
+            $exceptionsToUpdate = Mage::getModel('ezdefi_cryptocurrencypayment/exception')
                 ->getCollection()
-                ->addFieldToFilter('order_id', $orderIdToAssign);
-            foreach ($exceptionsToDelete as $exceptionToDelete) {
-                $exceptionToDelete->delete();
+                ->addFieldToFilter('order_id', $exception['order_id']);
+            foreach ($exceptionsToUpdate as $exceptionToUpdate) {
+                $exceptionToUpdate->setData('confirmed', 0);
+                $exceptionToUpdate->save();
+            }
+        } else {
+            $exceptionsToUpdate = Mage::getModel('ezdefi_cryptocurrencypayment/exception')
+                ->getCollection()
+                ->addFieldToFilter('id', $exception['id']);
+            foreach ($exceptionsToUpdate as $exceptionToUpdate) {
+                $exceptionToUpdate->setData('confirmed', 0);
+                $exceptionToUpdate->save();
             }
         }
 

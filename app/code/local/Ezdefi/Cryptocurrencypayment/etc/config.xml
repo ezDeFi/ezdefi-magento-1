@@ -87,10 +87,20 @@
                 <sort_order>71</sort_order>
                 <children>
                     <exception module="cryptocurrencypayment">
-                        <title>Exception management</title>
+                        <title>Exception Pending</title>
                         <sort_order>0</sort_order>
                         <action>adminhtml/exception</action>
                     </exception>
+                    <exceptionconfirmed module="cryptocurrencypayment">
+                        <title>Exception Confirmed</title>
+                        <sort_order>1</sort_order>
+                        <action>adminhtml/exceptionConfirmed</action>
+                    </exceptionconfirmed>
+                    <exceptionarchived module="cryptocurrencypayment">
+                        <title>Exception Archived</title>
+                        <sort_order>2</sort_order>
+                        <action>adminhtml/exceptionArchived</action>
+                    </exceptionarchived>
                 </children>
             </cryptocurrencypayment>
         </menu>

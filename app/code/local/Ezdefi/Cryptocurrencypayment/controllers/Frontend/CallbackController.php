@@ -3,7 +3,7 @@
 class Ezdefi_Cryptocurrencypayment_Frontend_CallbackController extends Mage_Core_Controller_Front_Action
 {
     CONST PAY_ON_TIME   = 1;
-    CONST PAID_OUT_TIME = 3;
+    CONST PAID_OUT_TIME = 2;
 
     public function ConfirmOrderAction()
     {
@@ -12,22 +12,20 @@ class Ezdefi_Cryptocurrencypayment_Frontend_CallbackController extends Mage_Core
 
         if ($paymentId) {
             $payment = Mage::helper('cryptocurrencypayment/GatewayApi')->checkPaymentComplete($paymentId);
-            if ($payment['status'] == 'DONE') {
-                $uoid        = $payment['uoid'];
-                $orderId     = explode('-', $uoid)[0];
-                $hasAmountId = explode('-', $uoid)[1];
+            $uoid        = $payment['uoid'];
+            $orderId     = explode('-', $uoid)[0];
+            $hasAmountId = explode('-', $uoid)[1];
 
+            if ($payment['status'] == 'DONE') {
                 if ($hasAmountId == 1) {
                     $exceptionCollection = Mage::getModel('ezdefi_cryptocurrencypayment/exception')->getCollection()->addFieldToFilter('payment_id', $payment['_id']);
                     $exception           = $exceptionCollection->getFirstItem();
                     $exception->setData('paid', self::PAY_ON_TIME);
                     $exception->setData('explorer_url', $payment['explorer_url']);
                     $exception->save();
+                    $this->deleteExceptionByOrderId($orderId, $payment['_id']);
                 } else {
-                    $exceptions = Mage::getModel('ezdefi_cryptocurrencypayment/exception')->getCollection()->addFieldToFilter('order_id', $orderId);
-                    foreach ($exceptions as $exceptionToDelete) {
-                        $exceptionToDelete->delete();
-                    }
+                    $this->deleteExceptionByOrderId($orderId);
                 }
                 return $this->getResponse()->setBody(json_encode(['order_success' => $this->setProcessingForOrder($orderId)]));
             }
@@ -37,6 +35,8 @@ class Ezdefi_Cryptocurrencypayment_Frontend_CallbackController extends Mage_Core
                 $exception->setData('paid', self::PAID_OUT_TIME);
                 $exception->setData('explorer_url', $payment['explorer_url']);
                 $exception->save();
+                $this->deleteExceptionByOrderId($orderId, $payment['_id']);
+
                 return $this->getResponse()->setBody(json_encode(['order_success' => "expired done"]));
             }
         } else {
@@ -51,6 +51,17 @@ class Ezdefi_Cryptocurrencypayment_Frontend_CallbackController extends Mage_Core
             }
             return $this->getResponse()->setBody(json_encode(['order_success' => "unknown transaction"]));
         }
+    }
+
+
+    private function deleteExceptionByOrderId($orderId, $paymentId = null) {
+        $collection = Mage::getModel('ezdefi_cryptocurrencypayment/exception')->getCollection()
+            ->addFieldToFilter('order_id', $orderId);
+
+        if($paymentId) {
+            $collection->addFieldToFilter('payment_id', array('neq' => $paymentId));
+        }
+        $collection->walk('delete');
     }
 
     private function addException($cryptoCurrency, $valueResponse, $exploreUrl)

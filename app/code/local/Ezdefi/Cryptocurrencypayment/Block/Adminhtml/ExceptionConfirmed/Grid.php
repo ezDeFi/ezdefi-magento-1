@@ -1,6 +1,6 @@
 <?php
 
-class Ezdefi_Cryptocurrencypayment_Block_Adminhtml_Exception_Grid extends Mage_Adminhtml_Block_Widget_Grid
+class Ezdefi_Cryptocurrencypayment_Block_Adminhtml_ExceptionConfirmed_Grid extends Mage_Adminhtml_Block_Widget_Grid
 {
     public function __construct()
     {
@@ -33,7 +33,19 @@ class Ezdefi_Cryptocurrencypayment_Block_Adminhtml_Exception_Grid extends Mage_A
                 'date' => 'od.created_at',
                 'increment_id' => 'od.increment_id'
             ))
-            ->where('main_table.order_assigned IS NULL AND main_table.explorer_url is NOT NULL')
+            ->join(
+            array(
+                'new_order' => $orders
+            ),
+            'new_order.entity_id = main_table.order_assigned',
+            array(
+                'new_email' => 'new_order.customer_email',
+                'new_customer' => 'CONCAT(new_order.customer_firstname, " ", new_order.customer_lastname)',
+                'new_total' => 'new_order.grand_total',
+                'new_date' => 'new_order.created_at',
+                'new_increment_id' => 'new_order.increment_id'
+            ))
+            ->where('main_table.confirmed = 1 AND main_table.order_assigned is NOT NULL')
             ->order('id DESC');
 
         $this->setCollection($collection);
@@ -51,28 +63,35 @@ class Ezdefi_Cryptocurrencypayment_Block_Adminhtml_Exception_Grid extends Mage_A
         $this->addColumn('currency', array(
             'header'   => 'Currency',
             'sortable' => true,
-            'width'    => '60',
+            'width'    => '30px',
             'index'    => 'currency',
             'type'     => 'text',
             'options'  => $this->getCurrencyOption(),
-            'index'    => 'currency'
         ));
 
         $this->addColumn('amount_id', array(
             'header'                    => 'Amount Id',
             'sortable'                  => false,
-            'width'                     => '60',
+            'width'                     => '70px',
             'type'                      => 'text',
             'index'                     => 'amount_id',
             'renderer'                  => 'Ezdefi_Cryptocurrencypayment_Block_Adminhtml_Exception_Column_Amount',
             'filter_condition_callback' => array($this, '_filterAmountIdConditionCallback')
         ));
 
-        $this->addColumn('increment_id', array(
+        $this->addColumn('new_increment_id', array(
             'header'   => 'Order',
             'sortable' => true,
             'width'    => '60',
-            'renderer' => 'Ezdefi_Cryptocurrencypayment_Block_Adminhtml_Exception_Column_Order',
+            'renderer' => 'Ezdefi_Cryptocurrencypayment_Block_Adminhtml_ExceptionConfirmed_Column_OrderAssigned',
+            'index'    => 'new_increment_id'
+        ));
+
+        $this->addColumn('increment_id', array(
+            'header'   => 'Old Order',
+            'sortable' => true,
+            'width'    => '60',
+            'renderer' => 'Ezdefi_Cryptocurrencypayment_Block_Adminhtml_ExceptionConfirmed_Column_Order',
             'index'    => 'increment_id'
         ));
 
@@ -80,7 +99,7 @@ class Ezdefi_Cryptocurrencypayment_Block_Adminhtml_Exception_Grid extends Mage_A
             'header'   => 'Payment Info',
             'width'    => '60',
             'index'    => 'payment_id',
-            'renderer' => 'Ezdefi_Cryptocurrencypayment_Block_Adminhtml_Exception_Column_PaymentInformation',
+            'renderer' => 'Ezdefi_Cryptocurrencypayment_Block_Adminhtml_ExceptionConfirmed_Column_PaymentInformation',
             'sortable' => false,
             'filter'   => false,
         ));
@@ -88,9 +107,9 @@ class Ezdefi_Cryptocurrencypayment_Block_Adminhtml_Exception_Grid extends Mage_A
         $this->addColumn('action',
             array(
                 'header'   => 'Action',
-                'width'    => '100',
+                'width'    => '50',
                 'type'     => 'action',
-                'renderer' => 'Ezdefi_Cryptocurrencypayment_Block_Adminhtml_Exception_Column_Action',
+                'renderer' => 'Ezdefi_Cryptocurrencypayment_Block_Adminhtml_ExceptionConfirmed_Column_Action',
                 'index'    => 'action',
                 'filter'   => false,
                 'sortable' => false,

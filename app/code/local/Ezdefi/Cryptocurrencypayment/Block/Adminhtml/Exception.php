@@ -5,8 +5,8 @@ class Ezdefi_Cryptocurrencypayment_Block_Adminhtml_Exception extends Mage_Adminh
     public function __construct()
     {
         $this->_blockGroup = 'cryptocurrencypayment';
-        $this->_controller = 'adminhtml_exception';
-        $this->_headerText = 'Grid';
+        $this->_controller = 'adminhtml_Exception';
+        $this->_headerText = 'Exception pending';
 
         parent::__construct();
     }
