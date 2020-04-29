@@ -95,7 +95,7 @@ class Ezdefi_Cryptocurrencypayment_Helper_GatewayApi extends Mage_Core_Helper_Ab
         if($payment) {
             $paymentData = json_decode($payment);
             if($paymentData->code == -1) {
-                echo $paymentData->error; die;
+                echo $this->__('Can\'t create payment. Please contact with shop owner.'); die;
             } else {
                 return json_decode($payment)->data;
             }
