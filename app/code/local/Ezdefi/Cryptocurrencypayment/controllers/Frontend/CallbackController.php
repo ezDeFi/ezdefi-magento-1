@@ -17,6 +17,10 @@ class Ezdefi_Cryptocurrencypayment_Frontend_CallbackController extends Mage_Core
             $hasAmountId = explode('-', $uoid)[1];
 
             if ($payment['status'] == 'DONE') {
+                $message = 'Payment ID: ' . $paymentId . '<br> 
+                            Status: ' . $payment['status'] . '<br>
+                            Use Ezdefi Wallet: ' . ($hasAmountId ? 'false' : 'true').'<br>
+                            Tx: '.($payment['explorer_url'] ? $payment['explorer_url'] : 'none');
                 if ($hasAmountId == 1) {
                     $exceptionCollection = Mage::getModel('ezdefi_cryptocurrencypayment/exception')->getCollection()->addFieldToFilter('payment_id', $payment['_id']);
                     $exception           = $exceptionCollection->getFirstItem();
@@ -27,7 +31,7 @@ class Ezdefi_Cryptocurrencypayment_Frontend_CallbackController extends Mage_Core
                 } else {
                     $this->deleteExceptionByOrderId($orderId);
                 }
-                return $this->getResponse()->setBody(json_encode(['order_success' => $this->setProcessingForOrder($orderId)]));
+                return $this->getResponse()->setBody(json_encode(['order_success' => $this->setProcessingForOrder($orderId, $message)]));
             }
             if ($payment['status'] == 'EXPIRED_DONE') {
                 $exceptionCollection = Mage::getModel('ezdefi_cryptocurrencypayment/exception')->getCollection()->addFieldToFilter('payment_id', $payment['_id']);
@@ -81,12 +85,12 @@ class Ezdefi_Cryptocurrencypayment_Frontend_CallbackController extends Mage_Core
         $exceptionModel->save();
     }
 
-    private function setProcessingForOrder($orderId)
+    private function setProcessingForOrder($orderId, $message)
     {
         $order = Mage::getModel('sales/order')->load($orderId);
         $order->setData('state', "processing");
         $order->setStatus("processing");
-        $history = $order->addStatusHistoryComment('Order was set to Processing by Ezdefi payment method.', false);
+        $history = $order->addStatusHistoryComment($message, false);
         $history->setIsCustomerNotified(true);
         $order->save();
 
