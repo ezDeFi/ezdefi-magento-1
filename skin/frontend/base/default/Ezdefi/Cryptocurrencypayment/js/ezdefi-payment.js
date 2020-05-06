@@ -159,7 +159,6 @@ $j( function() {
         checkOrderComplete: function () {
             var that = this;
             let urlCheckOrderComplete = '/ezdefi_frontend/payment/checkordercomplete';
-            console.log($j(".url-redirect").val());
             $j.ajax({
                 url: urlCheckOrderComplete,
                 method: "GET",
