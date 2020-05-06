@@ -26,20 +26,20 @@ $j( function() {
 
         initialize: function () {
             this.enablePlaceOrder();
-            $j(document).on('click', selectors.btnPlaceOrder, this.afterPlaceOrder.bind(this));
+            $j(document).on('change', selectors.selectCurrencyRadio, this.enablePlaceOrder.bind(this))
             $j(document).on('click', selectors.btnCreatePayment, this.checkDefaultPaymentToCreate.bind(this));
             $j(document).on('change', selectors.btnChooseMethod, this.checkPaymentToCreate.bind(this));
             $j(document).on('click', selectors.btnChangeCurrency, this.changeCurrency.bind(this));
+            this.checkDefaultPaymentToCreate()
+            this.checkOrderComplete();
         },
 
         enablePlaceOrder: function () {
-            $j(document).on('change', selectors.selectCurrencyRadio, function () {
-                let inputId = $j(selectors.selectCurrencyRadio + ":checked").attr('id');
-                $j(selectors.selectCurrencyLabel).css('border', '1px solid #d8d8d8').css('background', 'inherit');
-                $j(selectors.selectCurrencyLabel + "[for='" + inputId + "']").css('border', '2px solid #54bdff').css('background', '#c0dcf9db');
-                $j(selectors.btnPlaceOrder).css({background: 'cornflowerblue', cursor: 'pointer'});
-                $j(selectors.btnCreatePayment).css({background: 'cornflowerblue', cursor: 'pointer'});
-            });
+            let inputId = $j(selectors.selectCurrencyRadio + ":checked").attr('id');
+            $j(selectors.selectCurrencyLabel).css('border', '1px solid #d8d8d8').css('background', 'inherit');
+            $j(selectors.selectCurrencyLabel + "[for='" + inputId + "']").css('border', '2px solid #54bdff').css('background', '#c0dcf9db');
+            $j(selectors.btnPlaceOrder).css({background: 'cornflowerblue', cursor: 'pointer'});
+            $j(selectors.btnCreatePayment).css({background: 'cornflowerblue', cursor: 'pointer'});
         },
 
         createPayment: function (paymentType) {
@@ -132,28 +132,14 @@ $j( function() {
             $j(selectors.simpleMethodContent).html(html)
         },
 
-        afterPlaceOrder: function() {
-            var coinId = $j(selectors.selectCurrencyRadio+":checked").data('coin-id');
-            if(!coinId) {return;}
-
-            var that = this;
-            ezdefiCustomPayment.save(function () {
-                ezdefiReview.save(function () {
-                    that.checkDefaultPaymentToCreate();
-                    that.checkOrderComplete();
-                    $j(selectors.btnPlaceOrder).css('display', 'none');
-                    $j(selectors.btnCreatePayment).css('display', 'block');
-                });
-            });
-        },
-
         checkDefaultPaymentToCreate: function() {
-            var currency = $j('input[name="currency-selected-to-order"]:checked');
+            var currency = $j('input[name="payment[crypto_currency_id]"]:checked');
             $j(selectors.currencyChosedLogo).prop('src', currency.data('logo'));
             $j(selectors.currencyChosedName).html(currency.data('symbol') +'/'+ currency.data('name'));
 
             let enableSimpleMethod = $j('#choose-simple-method-radio').length > 0;
             let enableEzdefiMethod = $j('#choose-ezdefi-method-radio').length > 0;
+
             if(enableSimpleMethod) {
                 this.createSimplePayment();
                 $j('#choose-simple-method-radio').prop('checked', true);
@@ -168,12 +154,12 @@ $j( function() {
                 $j(".payment-box").css('display', 'none');
                 $j(".ezdefi-pay-box").css('display', 'block');
             }
-
         },
 
         checkOrderComplete: function () {
             var that = this;
             let urlCheckOrderComplete = '/ezdefi_frontend/payment/checkordercomplete';
+            console.log($j(".url-redirect").val());
             $j.ajax({
                 url: urlCheckOrderComplete,
                 method: "GET",
@@ -184,7 +170,7 @@ $j( function() {
                     if(orderStatus === 'processing') {
                         // clearInterval(checkOrderCompleteInterval);
                         alert('order complete');
-                        window.location.href = '/';
+                        window.location.href = $j(".url-redirect").val();
                     } else {
                         setTimeout(function () {
                             that.checkOrderComplete();

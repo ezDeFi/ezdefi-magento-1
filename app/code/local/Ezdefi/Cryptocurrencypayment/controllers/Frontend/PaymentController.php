@@ -2,6 +2,25 @@
 
 class Ezdefi_Cryptocurrencypayment_Frontend_PaymentController extends Mage_Core_Controller_Front_Action
 {
+    public function contentAction() {
+        if(!Mage::getSingleton('checkout/session')->getLastRealOrderId()) {
+            return $this->_redirect("/");
+        }
+
+        $this->loadLayout();
+        $block = $this->getLayout()
+            ->createBlock('cryptocurrencypayment/payment_content','cryptocurrencypayment')
+            ->setTemplate('cryptocurrencypayment/redirect.phtml');
+        $this->getLayout()->getBlock('content')->append($block);
+        $this->renderLayout();
+    }
+
+    public function responseAction() {
+        Mage::getSingleton('checkout/session')->unsQuoteId();
+        Mage::getSingleton('checkout/session')->unsLastRealOrderId();
+        Mage_Core_Controller_Varien_Action::_redirect('checkout/onepage/success', array('_secure'=> false));
+    }
+
     public function createAction()
     {
         $orderId        = Mage::getSingleton('checkout/session')->getLastRealOrderId();
@@ -9,7 +28,6 @@ class Ezdefi_Cryptocurrencypayment_Frontend_PaymentController extends Mage_Core_
         $order          = Mage::getModel('sales/order')->loadByIncrementId($orderId);
         $cryptoCurrency = Mage::helper('cryptocurrencypayment/GatewayApi')->getCurrency($requests['coin_id']);
         $discount       = (float)number_format((100 - $cryptoCurrency['discount']) / 100, 6);
-
 
         $paymentType = $requests['type'];
 
@@ -126,6 +144,4 @@ class Ezdefi_Cryptocurrencypayment_Frontend_PaymentController extends Mage_Core_
             $this->getResponse()->setBody(json_encode(['orderStatus' => 'pending']));
         }
     }
-
-
 }

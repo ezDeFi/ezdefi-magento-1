@@ -1,97 +1,10 @@
 <div class="form-list" id="payment_form_<?php echo $this->getMethodCode() ?>" style="display:none;">
-
-    <div class="ezdefi__coin-choosed-label">
-        <img alt="" class="ezdefi__payment-currency--logo tooltip-show-discount" data-toggle="popover"
-             title="Discount" data-placement="top" data-content="Discount:" data-trigger="hover">
-        <span class="ezdefi__payment-currency--name tooltip-show-discount" data-toggle="popover" title="Discount"
-              data-placement="top" data-content="Discount:" data-trigger="hover"></span>
-        <span class="wide-space"></span>
-    </div>
-
-    <div class="ezdefi__select-currency-box">
+    <div class="ezdefi__select-default-scurrency-box">
         <div class="ezdefi__select-currency--list">
             <?php echo $this->getCoins(); ?>
         </div>
-        <span class="ezdefi__btn-place-order"> Place order </span>
-        <span class="ezdefi__btn-create-payment"> Change </span>
-        <!--        <button class="button btn-checkout"> Change </button>-->
     </div>
-
-    <div class="ezdefi-payment-box">
-        <div class="ezdefi-payment__header">
-            <img alt="" class="ezdefi__payment-currency--logo tooltip-show-discount" data-toggle="popover"
-                 title="Discount" data-placement="top" data-content="Discount:" data-trigger="hover">
-            <span class="ezdefi__payment-currency--name tooltip-show-discount" data-toggle="popover" title="Discount"
-                  data-placement="top" data-content="Discount:" data-trigger="hover"></span>
-            <span class="wide-space"></span>
-            <span class="ezdefi__btn-change-currency"> Change </span>
-        </div>
-
-        <div class="ezdefi-payment__content">
-            <?php if ($this->checkEnableSimple()): ?>
-                <input type="radio"
-                       id="choose-simple-method-radio"
-                       name="choose-method-radio"
-                       class="choose-method-radio"
-                       value="simple">
-                <label class="btn-show-payment--simple btn-choose-payment-type ezdefi__check-showed-payment"
-                       for="choose-simple-method-radio">
-                    Pay with any crypto wallet
-                </label>
-            <?php endif; ?>
-            <?php if ($this->checkEnableEzdefi()): ?>
-                <input type="radio"
-                       id="choose-ezdefi-method-radio"
-                       name="choose-method-radio"
-                       class="choose-method-radio"
-                       <?php if (!$this->checkEnableSimple()) {echo "checked";} ?>
-                       value="ezdefi">
-                <label class="btn-show-payment--ezdefi btn-choose-payment-type <?php if (!$this->checkEnableSimple()) {echo "ezdefi__check-showed-payment";} ?>"
-                       for="choose-ezdefi-method-radio">
-                    <span class="ezdefi-method-label--logo"><img alt="" src="<?php echo $this->getSkinUrl('Ezdefi/Cryptocurrencypayment/image/ezdefi-logo.png'); ?>"></span>
-                    <span class="pay-with-ezdefi-label">Pay with ezDeFi wallet</span>
-                </label>
-            <?php endif; ?>
-
-            <?php if ($this->checkEnableOneMethod()): ?>
-                <label class="btn-choose-payment-type hover-none">
-                </label>
-            <?php endif; ?>
-
-            <div class="payment-box simple-pay-box">
-                <!-- ko ifnot: simplePaymentContent() -->
-                <div class="loader--simple loader">
-                    <div class="Loader__item"></div>
-                    <div class="Loader__item"></div>
-                    <div class="Loader__item"></div>
-                </div>
-                <!-- /ko -->
-                <div class="ezdefi__simple-payment-content">
-                </div>
-            </div>
-            <div class="payment-box ezdefi-pay-box">
-                <!-- ko ifnot: ezdefiPaymentContent() -->
-                <div class="loader--ezdefi loader">
-                    <div class="Loader__item"></div>
-                    <div class="Loader__item"></div>
-                    <div class="Loader__item"></div>
-                </div>
-                <!-- /ko -->
-                <div class="ezdefi__ezdefi-payment-content" data-bind="html: ezdefiPaymentContent">
-                </div>
-            </div>
-        </div>
-    </div>
-
 </div>
 <div>
     <?php echo $this->getMethod()->getConfigData('message'); ?>
 </div>
-
-
-<script type="text/javascript">
-    //<![CDATA[
-    ezdefiReview = new EzdefiReview('<?php echo $this->getUrl('checkout/onepage/saveOrder', array('form_key' => Mage::getSingleton('core/session')->getFormKey())) ?>', '<?php echo $this->getUrl('checkout/onepage/success') ?>', $('checkout-agreements'));
-    ezdefiCustomPayment = new EzdefiCustomPayment('co-payment-form', '<?php echo $this->getUrl('checkout/onepage/savePayment') ?>');
-    //]]>
-</script>

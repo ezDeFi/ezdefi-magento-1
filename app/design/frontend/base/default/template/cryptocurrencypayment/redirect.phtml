@@ -1,0 +1,74 @@
+<div class="ezdefi__select-currency-box">
+    <div class="ezdefi__select-currency--list">
+        <?php echo $this->getCoins(); ?>
+    </div>
+    <span class="ezdefi__btn-create-payment"> Change </span>
+</div>
+<input type="hidden" class="url-redirect" value="<?php echo $this->getResponseUrl(); ?>">
+<div class="ezdefi-payment-box">
+    <div class="ezdefi-payment__header">
+        <img alt="" class="ezdefi__payment-currency--logo tooltip-show-discount" data-toggle="popover"
+             title="Discount" data-placement="top" data-content="Discount:" data-trigger="hover" src="<?php echo $this->getDefaultCoin()->token->logo; ?>">
+        <span class="ezdefi__payment-currency--name tooltip-show-discount" data-toggle="popover" title="Discount"
+              data-placement="top" data-content="Discount:" data-trigger="hover">
+            <?php echo $this->getDefaultCoin()->token->name .'/'. $this->getDefaultCoin()->token->symbol; ?>
+        </span>
+
+        <span class="wide-space"></span>
+        <span class="ezdefi__btn-change-currency"> Change </span>
+    </div>
+    <div class="ezdefi-payment__content">
+        <?php if ($this->checkEnableSimple()): ?>
+            <input type="radio"
+                   id="choose-simple-method-radio"
+                   name="choose-method-radio"
+                   class="choose-method-radio"
+                   value="simple">
+            <label class="btn-show-payment--simple btn-choose-payment-type ezdefi__check-showed-payment"
+                   for="choose-simple-method-radio">
+                Pay with any crypto wallet
+            </label>
+        <?php endif; ?>
+        <?php if ($this->checkEnableEzdefi()): ?>
+            <input type="radio"
+                   id="choose-ezdefi-method-radio"
+                   name="choose-method-radio"
+                   class="choose-method-radio"
+                <?php if (!$this->checkEnableSimple()) {echo "checked";} ?>
+                   value="ezdefi">
+            <label class="btn-show-payment--ezdefi btn-choose-payment-type <?php if (!$this->checkEnableSimple()) {echo "ezdefi__check-showed-payment";} ?>"
+                   for="choose-ezdefi-method-radio">
+                <span class="ezdefi-method-label--logo"><img alt="" src="<?php echo $this->getSkinUrl('Ezdefi/Cryptocurrencypayment/image/ezdefi-logo.png'); ?>"></span>
+                <span class="pay-with-ezdefi-label">Pay with ezDeFi wallet</span>
+            </label>
+        <?php endif; ?>
+
+        <?php if ($this->checkEnableOneMethod()): ?>
+            <label class="btn-choose-payment-type hover-none">
+            </label>
+        <?php endif; ?>
+
+        <div class="payment-box simple-pay-box">
+            <!-- ko ifnot: simplePaymentContent() -->
+            <div class="loader--simple loader">
+                <div class="Loader__item"></div>
+                <div class="Loader__item"></div>
+                <div class="Loader__item"></div>
+            </div>
+            <!-- /ko -->
+            <div class="ezdefi__simple-payment-content">
+            </div>
+        </div>
+        <div class="payment-box ezdefi-pay-box">
+            <!-- ko ifnot: ezdefiPaymentContent() -->
+            <div class="loader--ezdefi loader">
+                <div class="Loader__item"></div>
+                <div class="Loader__item"></div>
+                <div class="Loader__item"></div>
+            </div>
+            <!-- /ko -->
+            <div class="ezdefi__ezdefi-payment-content" data-bind="html: ezdefiPaymentContent">
+            </div>
+        </div>
+    </div>
+</div>

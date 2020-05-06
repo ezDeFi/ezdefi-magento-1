@@ -10,12 +10,8 @@ class Ezdefi_Cryptocurrencypayment_Model_Paymentmethod extends Mage_Payment_Mode
     {
         $info = $this->getInfoInstance();
 
-        if ($data->getCustomFieldOne()) {
-            $info->setCustomFieldOne($data->getCustomFieldOne());
-        }
-
-        if ($data->getCustomFieldTwo()) {
-            $info->setCustomFieldTwo($data->getCustomFieldTwo());
+        if ($data->getCryptoCurrencyId()) {
+            $info->setCryptoCurrencyId($data->getCryptoCurrencyId());
         }
 
         return $this;
@@ -26,28 +22,22 @@ class Ezdefi_Cryptocurrencypayment_Model_Paymentmethod extends Mage_Payment_Mode
         parent::validate();
         $info = $this->getInfoInstance();
 
-//        if (!$info->getCustomFieldOne())
-//        {
-//            $errorCode = 'invalid_data';
-//            $errorMsg = $this->_getHelper()->__("CustomFieldOne is a required field.\n");
-//        }
-//
-//        if (!$info->getCustomFieldTwo())
-//        {
-//            $errorCode = 'invalid_data';
-//            $errorMsg .= $this->_getHelper()->__('CustomFieldTwo is a required field.');
-//        }
-//
-//        if ($errorMsg)
-//        {
-//            Mage::throwException($errorMsg);
-//        }
+        if (!$info->getCryptoCurrencyId())
+        {
+            $errorMsg = $this->_getHelper()->__("Please specify coin.");
+        }
+
+        if ($errorMsg)
+        {
+            Mage::throwException($errorMsg);
+        }
+        Mage::getSingleton('checkout/session')->setCryptoCurrencyId($info->getCryptoCurrencyId());
 
         return $this;
     }
 
     public function getOrderPlaceRedirectUrl()
     {
-        return Mage::getUrl('ezdef_cryptocurrencypayment/payment/redirect', array('_secure' => false));
+        return Mage::getUrl('ezdefi_frontend/payment/content', array('_secure' => false));
     }
 }

@@ -1,9 +1,15 @@
 .ezdefi__select-currency-box {
+    display: none;
+}
+
+.ezdefi__select-currency-box,
+.ezdefi__select-default-scurrency-box{
     margin: 20px auto;
     width: 100%;
     max-width: 550px;
     text-align: center;
 }
+
 .ezdefi__select-currency--list {
     max-height: 500px;
     max-width: 100%;
@@ -55,16 +61,6 @@
     grid-row: 2/ span 1;
 }
 
-/*.ezdefi-select-currency-box table>tbody>tr>td {*/
-/*    vertical-align: inherit;*/
-/*}*/
-
-/*.ezdefi-select-currency-box table>tbody>tr>td input {*/
-/*    -webkit-appearance:radio;*/
-/*    -moz-appearance:radio;*/
-/*}*/
-
-
 .ezapy-guide-link {
     display: block;
     padding: 15px 0;
@@ -85,10 +81,6 @@
     user-select: none;
     cursor: not-allowed;
     border-radius: 3px;
-}
-
-.ezdefi__btn-create-payment {
-    display: none;
 }
 
 .ezdefi__btn-change-currency {
@@ -114,7 +106,6 @@
 .ezdefi-payment-box {
     width: 100%;
     grid-column: 1/-1;
-    display: none;
 }
 
 .ezdefi__simple-payment-content,
