@@ -52,17 +52,7 @@ class Ezdefi_Cryptocurrencypayment_Adminhtml_ExceptionConfirmedController extend
         } else {
             $exceptionsToUpdate = Mage::getModel('ezdefi_cryptocurrencypayment/exception')
                 ->getCollection()
-                ->addFieldToFilter('id', $exception['id']);
-            foreach ($exceptionsToUpdate as $exceptionToUpdate) {
-                $exceptionToUpdate->setData('confirmed', 0);
-                $exceptionToUpdate->save();
-            }
-        }
-
-        if(!$exception['order_id']) {
-            $exceptionsToUpdate = Mage::getModel('ezdefi_cryptocurrencypayment/exception')
-                ->getCollection()
-                ->addFieldToFilter('order_id', $exception['order_assigned']);
+                ->addFieldToFilter(['id', 'order_id'], [$exception['id'], $exception['order_assigned']]);
             foreach ($exceptionsToUpdate as $exceptionToUpdate) {
                 $exceptionToUpdate->setData('confirmed', 0);
                 $exceptionToUpdate->save();

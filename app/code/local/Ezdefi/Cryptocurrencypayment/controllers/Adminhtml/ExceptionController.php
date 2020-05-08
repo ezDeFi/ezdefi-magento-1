@@ -45,15 +45,13 @@ class Ezdefi_Cryptocurrencypayment_Adminhtml_ExceptionController extends Mage_Ad
         }
         $this->setStatusForOrder($orderIdToAssign, 'processing', 'processing');
 
-        if(!$exception['order_id']) {
-            //delete exception with order_id = exception.order_id
-            $exceptionsToDelete = Mage::getModel('ezdefi_cryptocurrencypayment/exception')
-                ->getCollection()
-                ->addFieldToFilter('order_id', $orderIdToAssign);
-            foreach ($exceptionsToDelete as $exceptionToDelete) {
-                $exceptionToDelete->setData('confirmed', 2);
-                $exceptionToDelete->save();
-            }
+        //hide exception with order_id = exception.order_assigned
+        $exceptionsToDelete = Mage::getModel('ezdefi_cryptocurrencypayment/exception')
+            ->getCollection()
+            ->addFieldToFilter('order_id', $orderIdToAssign);
+        foreach ($exceptionsToDelete as $exceptionToDelete) {
+            $exceptionToDelete->setData('confirmed', 2);
+            $exceptionToDelete->save();
         }
 
         $this->_redirect("*/*/");
