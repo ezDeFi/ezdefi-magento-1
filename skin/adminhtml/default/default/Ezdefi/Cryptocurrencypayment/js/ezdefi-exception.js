@@ -12,7 +12,7 @@ $j( function() {
     })
     
     $j('.ezdefi__btn-assign-order').click(function () {
-        var confirmAssign = confirm("Do you want to assign this order");
+        var confirmAssign = confirm("Do you want to assign this order?");
         if (confirmAssign === true) {
             window.location.href = $j(this).data('url-assign') + '?order_id='+ $j(this).data('order-to-assign');
         }

@@ -27,24 +27,24 @@ class Ezdefi_Cryptocurrencypayment_Block_Adminhtml_ExceptionConfirmed_Grid exten
             ),
             'od.entity_id = main_table.order_id',
             array(
-                'email' => 'od.customer_email',
-                'customer' => 'CONCAT(od.customer_firstname, " ", od.customer_lastname)',
-                'total' => 'od.grand_total',
-                'date' => 'od.created_at',
+                'email'        => 'od.customer_email',
+                'customer'     => 'CONCAT(od.customer_firstname, " ", od.customer_lastname)',
+                'total'        => 'od.grand_total',
+                'date'         => 'od.created_at',
                 'increment_id' => 'od.increment_id'
             ))
             ->join(
-            array(
-                'new_order' => $orders
-            ),
-            'new_order.entity_id = main_table.order_assigned',
-            array(
-                'new_email' => 'new_order.customer_email',
-                'new_customer' => 'CONCAT(new_order.customer_firstname, " ", new_order.customer_lastname)',
-                'new_total' => 'new_order.grand_total',
-                'new_date' => 'new_order.created_at',
-                'new_increment_id' => 'new_order.increment_id'
-            ))
+                array(
+                    'new_order' => $orders
+                ),
+                'new_order.entity_id = main_table.order_assigned',
+                array(
+                    'new_email'        => 'new_order.customer_email',
+                    'new_customer'     => 'CONCAT(new_order.customer_firstname, " ", new_order.customer_lastname)',
+                    'new_total'        => 'new_order.grand_total',
+                    'new_date'         => 'new_order.created_at',
+                    'new_increment_id' => 'new_order.increment_id'
+                ))
             ->where('main_table.confirmed = 1 AND main_table.order_assigned is NOT NULL')
             ->order('id DESC');
 
@@ -84,15 +84,17 @@ class Ezdefi_Cryptocurrencypayment_Block_Adminhtml_ExceptionConfirmed_Grid exten
             'sortable' => true,
             'width'    => '60',
             'renderer' => 'Ezdefi_Cryptocurrencypayment_Block_Adminhtml_ExceptionConfirmed_Column_OrderAssigned',
-            'index'    => 'new_increment_id'
+            'index'    => 'new_increment_id',
+            'filter_condition_callback' => array($this, '_filterNewIncrementIdConditionCallback')
         ));
 
         $this->addColumn('increment_id', array(
-            'header'   => 'Old Order',
-            'sortable' => true,
-            'width'    => '60',
-            'renderer' => 'Ezdefi_Cryptocurrencypayment_Block_Adminhtml_ExceptionConfirmed_Column_Order',
-            'index'    => 'increment_id'
+            'header'                    => 'Old Order',
+            'sortable'                  => true,
+            'width'                     => '60',
+            'renderer'                  => 'Ezdefi_Cryptocurrencypayment_Block_Adminhtml_ExceptionConfirmed_Column_Order',
+            'index'                     => 'increment_id',
+            'filter_condition_callback' => array($this, '_filterIncrementIdConditionCallback')
         ));
 
         $this->addColumn('payment_id', array(
@@ -141,4 +143,29 @@ class Ezdefi_Cryptocurrencypayment_Block_Adminhtml_ExceptionConfirmed_Grid exten
 
         return $this;
     }
+
+    public function _filterIncrementIdConditionCallback($collection, $column)
+    {
+        if (!$value = $column->getFilter()->getValue()) {
+            return $this;
+        }
+        $this->getCollection()
+            ->getSelect()
+            ->where("od.increment_id LIKE '%" . $value . "%'");
+
+        return $this;
+    }
+
+    public function _filterNewIncrementIdConditionCallback($collection, $column)
+    {
+        if (!$value = $column->getFilter()->getValue()) {
+            return $this;
+        }
+        $this->getCollection()
+            ->getSelect()
+            ->where("new_order.increment_id LIKE '%" . $value . "%'");
+
+        return $this;
+    }
+
 }

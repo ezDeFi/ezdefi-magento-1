@@ -41,9 +41,6 @@ class Ezdefi_Cryptocurrencypayment_Adminhtml_ExceptionConfirmedController extend
 
         $this->setStatusForOrder($exception['order_assigned'], 'pending', 'pending');
 
-        $exception->setData('order_assigned', NULL);
-        $exception->save();
-
         if(!$exception['explorer_url']) {
             $exceptionsToUpdate = Mage::getModel('ezdefi_cryptocurrencypayment/exception')
                 ->getCollection()
@@ -62,6 +59,18 @@ class Ezdefi_Cryptocurrencypayment_Adminhtml_ExceptionConfirmedController extend
             }
         }
 
+        if(!$exception['order_id']) {
+            $exceptionsToUpdate = Mage::getModel('ezdefi_cryptocurrencypayment/exception')
+                ->getCollection()
+                ->addFieldToFilter('order_id', $exception['order_assigned']);
+            foreach ($exceptionsToUpdate as $exceptionToUpdate) {
+                $exceptionToUpdate->setData('confirmed', 0);
+                $exceptionToUpdate->save();
+            }
+        }
+
+        $exception->setData('order_assigned', NULL);
+        $exception->save();
         $this->_redirect("*/*/");
     }
 

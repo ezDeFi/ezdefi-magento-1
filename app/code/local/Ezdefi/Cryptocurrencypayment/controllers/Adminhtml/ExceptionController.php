@@ -51,7 +51,8 @@ class Ezdefi_Cryptocurrencypayment_Adminhtml_ExceptionController extends Mage_Ad
                 ->getCollection()
                 ->addFieldToFilter('order_id', $orderIdToAssign);
             foreach ($exceptionsToDelete as $exceptionToDelete) {
-                $exceptionToDelete->delete();
+                $exceptionToDelete->setData('confirmed', 2);
+                $exceptionToDelete->save();
             }
         }
 

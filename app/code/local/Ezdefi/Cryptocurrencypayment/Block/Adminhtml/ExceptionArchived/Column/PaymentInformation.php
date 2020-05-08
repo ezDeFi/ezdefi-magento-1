@@ -7,7 +7,7 @@ class Ezdefi_Cryptocurrencypayment_Block_Adminhtml_ExceptionArchived_Column_Paym
         $explorerUrl = $row->getExplorerUrl();
         $explorerUrlRow = isset($explorerUrl) ? '<tr>
                                 <td class="border-none">Explorer url</td>
-                                <td class="border-none"><a target="_blank" href="'.$explorerUrl.'"><span style="word-break: break-all">View Transaction Detail</span></a></td>
+                                <td class="border-none"><a target="_blank" href="'.$explorerUrl.'"><span style="white-space: nowrap;">View Transaction Detail</span></a></td>
                             </tr>' : '';
 
         if($row->getOrderId()){
