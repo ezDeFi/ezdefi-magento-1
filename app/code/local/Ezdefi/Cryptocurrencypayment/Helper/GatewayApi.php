@@ -156,6 +156,10 @@ class Ezdefi_Cryptocurrencypayment_Helper_GatewayApi extends Mage_Core_Helper_Ab
         return $value;
     }
 
+    public function updateCallbackUrl($callback, $websiteId, $apiKey, $gatewayUrl) {
+        $this->sendCurl('/website/update_callback', "PUT", ['callback' => $callback, 'websiteId'=>$websiteId], $apiKey, $gatewayUrl);
+    }
+
     public function sendCurl($api, $method, $params = [], $apiKey = null, $apiUrl = null) {
         if(!$apiUrl) {
             $apiUrl = Mage::getStoreConfig('payment/ezdefi_cryptocurrencypayment/gateway_api_url');
