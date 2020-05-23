@@ -12,6 +12,18 @@ class Ezdefi_Cryptocurrencypayment_Adminhtml_ExceptionController extends Mage_Ad
 
     public function indexAction()
     {
+        $lastTimeDelete =  Mage::getStoreConfig('ezdefi_cron/last_time_delete');
+
+        if(time() - (int)$lastTimeDelete > 86400 * 7) {
+            $resource = Mage::getSingleton('core/resource');
+            $writeConnection = $resource->getConnection('core_write');
+            $table = $resource->getTableName('ezdefi_cryptocurrencypayment/exception');
+            $query =  "DELETE FROM {$table} WHERE DATEDIFF( NOW( ) ,  expiration ) >= 5";
+            $writeConnection->query($query);
+
+            Mage::getModel('core/config')->saveConfig('ezdefi_cron/last_time_delete', time());
+        }
+
         $this->loadLayout();
         $this->_title($this->__("Admin Grid"));
         $this->renderLayout();

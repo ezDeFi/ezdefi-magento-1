@@ -6,6 +6,7 @@ $installer = $this;
 
 $installer->startSetup();
 
+$installer->run("DROP TABLE IF EXISTS ".$installer->getTable('ezdefi_cryptocurrencypayment/exception'));
 $table = $installer->getConnection()
     ->newTable($installer->getTable('ezdefi_cryptocurrencypayment/exception'))
     ->addColumn(
@@ -96,12 +97,5 @@ $table = $installer->getConnection()
     );
 $installer->getConnection()->createTable($table);
 
-$installer->run("
-    CREATE EVENT  IF NOT EXISTS `ezdefi_remove_exception_event`
-    ON SCHEDULE EVERY ".TIME_REMOVE_EXCEPTION." DAY
-    STARTS DATE(NOW())
-    DO
-    DELETE FROM `{$installer->getTable('ezdefi_cryptocurrencypayment/exception')}` WHERE DATEDIFF( NOW( ) ,  expiration ) >= 5;
-");
-
+Mage::getModel('core/config')->saveConfig('ezdefi_cron/last_time_delete', time());
 $installer->endSetup();
