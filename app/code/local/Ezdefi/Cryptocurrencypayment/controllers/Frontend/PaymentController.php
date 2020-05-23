@@ -126,7 +126,7 @@ class Ezdefi_Cryptocurrencypayment_Frontend_PaymentController extends Mage_Core_
             'order_id'   => $order['entity_id'],
             'currency'   => $cryptoCurrency['token']['symbol'],
             'amount_id'  => $amountId,
-            'expiration' => $expiration,
+            'expiration' => time() + $cryptoCurrency['expiration'] * 60,
             'paid'       => 0,
             'has_amount' => $hasAmount,
         ]);
