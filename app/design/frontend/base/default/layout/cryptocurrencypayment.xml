@@ -7,7 +7,7 @@
             </action>
             <action method="addItem">
                 <type>skin_js</type>
-                <script>Ezdefi/Cryptocurrencypayment/js/ezdefi-payment.js</script>
+                <script>Ezdefi/Cryptocurrencypayment/js/ezdefi-select-coin.js</script>
             </action>
         </reference>
     </checkout_onepage_index>

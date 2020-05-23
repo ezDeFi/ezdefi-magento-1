@@ -15,7 +15,7 @@ class Ezdefi_Cryptocurrencypayment_Frontend_GatewayController extends Mage_Core_
         $publicKeyStatus = Mage::helper('cryptocurrencypayment/GatewayApi')->checkPublicKey($requests['public_key'], $requests['api_key'], $requests['gateway_api_url']);
 
         if($publicKeyStatus == 'true') {
-            Mage::helper('cryptocurrencypayment/GatewayApi')->updateCallbackUrl('ezdefi_frontend/callback/confirmorder', $requests['public_key'], $requests['api_key'], $requests['gateway_api_url']);
+            Mage::helper('cryptocurrencypayment/GatewayApi')->updateCallbackUrl( Mage::getUrl('ezdefi_frontend/callback/confirmorder'), $requests['public_key'], $requests['api_key'], $requests['gateway_api_url']);
         }
         $this->getResponse()->setBody(json_encode($publicKeyStatus));
     }
